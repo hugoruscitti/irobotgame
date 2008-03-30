@@ -17,11 +17,12 @@ personajes = ActionSprite(ima_personajes)
 mounstro.x = 320
 mounstro.y = 240
 personajes.x = 320
-personajes.y = 240
+personajes.y = 240 + 150 / 2
 
 
-mounstro.do(Scale(1.1, 3) | Move((0, 20), 3))
-personajes.do(Move((0, -20), 3))
+speed = 1
+mounstro.do(Scale(1.1, speed + 1) | Move((0, 20), speed + 1))
+personajes.do(Move((0, -40), speed))
 
 
 
