@@ -12,6 +12,7 @@ class World(pyglet.window.Window):
         self._scene = None
         self.change_scene(game.Game(self))
         self._init_window_size()
+        self.enable_alpha_blending()
 
         if config.DEBUG:
             self.set_location(400, 400)

@@ -13,15 +13,15 @@ window.set_exclusive_mouse(True)
 glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 glEnable(GL_BLEND)
 
-circle = common.load_image('circle.png')
+circle = common.load_image('mouse/circle.png')
 circle.anchor_x = circle.width / 2
 circle.anchor_y = circle.height / 2
 
-background = common.load_image('background.png')
+background = common.load_image('mouse/background.png')
 background.anchor_x = background.width / 2
 background.anchor_y = background.height / 2
 
-cursor = common.load_image('cursor.png')
+cursor = common.load_image('mouse/cursor.png')
 cursor.anchor_x = cursor.width / 2
 cursor.anchor_y = cursor.height / 2
 
@@ -60,8 +60,8 @@ def on_mouse_motion(x, y, dx, dy):
             angulo = math.atan2(op, ad)
             new_op = 200 * math.sin(angulo)
             new_ad = 200 * math.cos(angulo)
-            mouse_x = 200 + new_ad
-            mouse_y = 200 + new_op
+            mouse_x = AXIS_X + new_ad
+            mouse_y = AXIS_Y + new_op
     else:
         if not mouse_in:
             print "Sale en: %d (e ingreso en %d)" %(angulo, mouse_exit)
