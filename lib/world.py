@@ -25,12 +25,31 @@ class World(pyglet.window.Window):
     def change_scene(self, scene):
         if self._scene:
             self.pop_handlers()
+            pyglet.clock.unschedule(self._scene.update)
 
         self._scene = scene
         self.push_handlers(scene)
+        pyglet.clock.schedule_interval(scene.update, 1/60.0)
 
     def on_draw(self):
         self.fps.draw()
+
+    def on_key_press(self, symbol, extra):
+        if symbol == pyglet.window.key.F:
+            self.set_fullscreen(not self.fullscreen)
+        elif symbol in [pyglet.window.key.ESCAPE, pyglet.window.key.Q]:
+            import sys
+            sys.exit(0)
+
+
+
+
+
+
+
+
+
+
 
     # TODO: Llevar estas rutinas a otra clase abstracta, o extender "cocos.director".
     def _init_window_size(self):
