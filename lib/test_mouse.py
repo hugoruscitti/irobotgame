@@ -6,7 +6,6 @@ from pyglet.gl import *
 
 import common
 
-
 window = pyglet.window.Window(caption='I Robot ?')
 window.set_location(400, 400)
 window.set_exclusive_mouse(True)
