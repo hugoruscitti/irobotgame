@@ -13,3 +13,6 @@ class Game(Scene):
         self.world.clear()            # FIXME: evitar usar este clear por los bordes
                                       # de pantalla
         self._background.blit(0, 0)
+
+    def update(self, dt):
+        pass
