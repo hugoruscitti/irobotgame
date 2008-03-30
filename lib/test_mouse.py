@@ -60,8 +60,8 @@ def on_mouse_motion(x, y, dx, dy):
             angulo = math.atan2(op, ad)
             new_op = 200 * math.sin(angulo)
             new_ad = 200 * math.cos(angulo)
-            mouse_x = AXIS_X + new_ad
-            mouse_y = AXIS_Y + new_op
+            mouse_x = 200 + new_ad
+            mouse_y = 200 + new_op
     else:
         if not mouse_in:
             print "Sale en: %d (e ingreso en %d)" %(angulo, mouse_exit)
