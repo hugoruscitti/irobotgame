@@ -4,6 +4,8 @@ import math
 import pyglet
 from pyglet.gl import *
 
+import common
+
 
 window = pyglet.window.Window(caption='I Robot ?')
 window.set_location(400, 400)
@@ -12,15 +14,15 @@ window.set_exclusive_mouse(True)
 glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 glEnable(GL_BLEND)
 
-circle = pyglet.resource.image('circle.png')
+circle = common.load_image('circle.png')
 circle.anchor_x = circle.width / 2
 circle.anchor_y = circle.height / 2
 
-background = pyglet.resource.image('background.png')
+background = common.load_image('background.png')
 background.anchor_x = background.width / 2
 background.anchor_y = background.height / 2
 
-cursor = pyglet.resource.image('cursor.png')
+cursor = common.load_image('cursor.png')
 cursor.anchor_x = cursor.width / 2
 cursor.anchor_y = cursor.height / 2
 
