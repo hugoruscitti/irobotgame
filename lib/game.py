@@ -23,11 +23,8 @@ class Game(Scene):
         self._background.blit(0, 0)
         self.player.draw()
 
-        if config.DEBUG:
+        if config.SHOW_MOUSE:
             self.mouse.draw()
-
-
-
 
     def update(self, dt):
         self.mouse.update(dt)

@@ -5,7 +5,8 @@ import math
 
 CENTER_X = 420
 CENTER_Y = 200
-SCALE_TO_REDUCE = 10.0
+SCALE_TO_REDUCE = 6.0
+FORCE = 3
 
 
 class Mouse:
@@ -20,8 +21,8 @@ class Mouse:
         self.are_in = False
         self.exit_angle = 0     # angulo de salida (cuando 'are_in' pasa a True)
 
-        if config.DEBUG:
-            self._load_images()         # FIXME: Solo se llama acá, en produccion.
+        if config.SHOW_MOUSE:
+            self._load_images()
 
         self.player = player
 
@@ -51,8 +52,8 @@ class Mouse:
     def on_mouse_motion(self, x, y, dx, dy):
         # NOTE: esto es una refactorización de "test_mouse.py"
         # NOTE: 'x' e 'y' no se usan, si se usa 'self.x', 'self.y' ...
-        self.x += dx
-        self.y += dy
+        self.x += dx * FORCE
+        self.y += dy * FORCE
 
         # catetos
         op = self.y - CENTER_Y
@@ -110,9 +111,13 @@ class Mouse:
             else:
                 pass
 
-    def update(self, dt):
+    def _mouse_move_to_center(self):
         self.x += (CENTER_X - self.x) / SCALE_TO_REDUCE 
         self.y += (CENTER_Y - self.y) / SCALE_TO_REDUCE
+        pass
+
+    def update(self, dt):
+        self._mouse_move_to_center()
 
         # FIX: esto es un sucio HACK...
         self.on_mouse_motion(0, 0, 0, 0)
