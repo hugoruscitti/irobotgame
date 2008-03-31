@@ -4,6 +4,7 @@ import common
 import mouse
 import config
 import player
+import audio
 
 
 class Game(Scene):
@@ -15,6 +16,7 @@ class Game(Scene):
         self.player = player.Player()
         self.mouse = mouse.Mouse(self.player)
         self.world.set_exclusive_mouse(True)
+        self.audio = audio.Audio()
 
     def on_draw(self):
         self.world.clear()            # FIXME: evitar que se tapan los bordes
@@ -30,6 +32,7 @@ class Game(Scene):
     def update(self, dt):
         self.mouse.update(dt)
         self.player.update(dt)
+        self.audio.update()
 
     def on_mouse_motion(self, x, y, dx, dy):
         # FIXME: Creo que solo habría que actualizar el mouse cuando el tipo
