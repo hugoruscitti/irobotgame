@@ -13,6 +13,7 @@ class Game(Scene):
     def __init__(self, world):
         Scene.__init__(self, world)
         self._background = common.load_image('game_background.png')
+        self._layer = common.load_image('game_layer.png')
         self.player = player.Player()
         self.mouse = mouse.Mouse(self.player)
         self.world.capture_mouse()
@@ -21,10 +22,10 @@ class Game(Scene):
     def on_draw(self):
         self.world.clear()            # FIXME: evitar que se tapan los bordes
         self._background.blit(0, 0)
+        self._layer.blit(0, 0)
         self.player.draw()
+        self.mouse.draw()
 
-        if config.SHOW_MOUSE:
-            self.mouse.draw()
 
     def update(self, dt):
         self.mouse.update(dt)

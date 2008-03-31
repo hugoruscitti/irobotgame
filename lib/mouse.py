@@ -24,17 +24,24 @@ class Mouse:
         self.y = CENTER_Y
         self.are_in = False
         self.exit_angle = 0     # angulo de salida (cuando 'are_in' pasa a True)
-
-        if config.SHOW_MOUSE:
-            self._load_images()
+        self._load_images()
 
         self.player = player
 
 
     def draw(self):
-        self.background.blit(CENTER_X, CENTER_Y)
-        self.circle.blit(CENTER_X, CENTER_Y)
-        self.cursor.blit(self.x, self.y)
+        if config.SHOW_MOUSE:
+            self.background.blit(CENTER_X, CENTER_Y)
+            self.circle.blit(CENTER_X, CENTER_Y)
+            self.cursor.blit(self.x, self.y)
+        
+        if config.SHOW_PAD:
+            # TODO: Pasar los valores a constantes
+            #       512 es el centro del cículo de pad
+            #       160 es el centro del cículo de pad
+            x = (self.x - CENTER_X) / 3 + 520
+            y = (self.y - CENTER_Y) / 3 + 160
+            self.mouse.blit(x, y)
 
     def _load_images(self):
         circle = common.load_image('mouse/circle.png')
@@ -52,6 +59,9 @@ class Mouse:
         self.circle = circle
         self.cursor = cursor
         self.background = background
+        self.mouse = common.load_image('mouse/mouse.png')
+        self.mouse.anchor_x = self.mouse.width / 2
+        self.mouse.anchor_y = self.mouse.height / 2
 
     def on_mouse_motion(self, x, y, dx, dy):
         # NOTE: esto es una refactorización de "test_mouse.py"
