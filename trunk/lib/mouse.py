@@ -12,8 +12,12 @@ FORCE = 3
 class Mouse:
     """Representa el control de mouse.
 
-    Para que este objeto ande hay que hacer
-    'window.set_exclusive_mouse(True)' con anterioridad."""
+    El objeto evalua la posición del mouse en todo momento, cuando detecta
+    que el mouse se ha movido en alguna dirección llama a '_check_motion' en
+    donde el movimiento detectado se reporta directamente al persona 'player'.
+
+    Para que este objeto ande hay que hacer 'window.set_exclusive_mouse(True)' con
+    anterioridad."""
 
     def __init__(self, player):
         self.x = CENTER_X
@@ -71,6 +75,8 @@ class Mouse:
             if self.are_in:
                 self.are_in = False
                 self.exit_angle = angle
+                
+            self._check_motion(angle)
 
             if distance_to_axis > 200: # radio grande
                 # Restringe el mouse para que no se salga del círculo
@@ -84,7 +90,7 @@ class Mouse:
                 #print "Sale en: %d (e ingreso en %d)" %(angle, self.exit_angle)
                 self.are_in = True
 
-                self._check_motion(angle)
+                #self._check_motion(angle)
 
     def _check_motion(self, angle):
         """Se llama cuando concluye un movimiento.
@@ -105,9 +111,8 @@ class Mouse:
                 ]
 
         for index, name, bottom, top in pieces:
-            if bottom < angle < top and bottom < self.exit_angle < top:
-                self.player.set_state(index)
-                #print "Detectado evento: %s" %name
+            if bottom < angle < top:
+                self.player.set_state(index, reset_counter=True)
             else:
                 pass
 

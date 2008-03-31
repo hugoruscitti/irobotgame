@@ -15,7 +15,7 @@ class Game(Scene):
         self._background = common.load_image('game_background.png')
         self.player = player.Player()
         self.mouse = mouse.Mouse(self.player)
-        self.world.set_exclusive_mouse(True)
+        self.world.capture_mouse()
         self.audio = audio.Audio()
 
     def on_draw(self):
@@ -33,6 +33,10 @@ class Game(Scene):
 
     def on_mouse_motion(self, x, y, dx, dy):
         # FIXME: Creo que solo habría que actualizar el mouse cuando el tipo
-        # deba mover el mouse, antes no. Por ello esto se tendría que arreglar
+        # deba mover el mouse, es decir, cuando el juego le pida hacer un
+        # movimiento, antes no. Por ello esto se tendría que arreglar
         # a futuro.
+        self.mouse.on_mouse_motion(x, y, dx, dy)
+
+    def on_mouse_drag(self, x, y, dx, dy, button, extra):
         self.mouse.on_mouse_motion(x, y, dx, dy)

@@ -1,3 +1,3 @@
 DEBUG = True
 AUDIO = False
-SHOW_MOUSE = True
+SHOW_MOUSE = False
