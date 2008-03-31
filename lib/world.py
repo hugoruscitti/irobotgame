@@ -2,6 +2,7 @@
 import pyglet
 from pyglet.gl import *
 
+import common
 import config
 import game
 
@@ -9,6 +10,7 @@ class World(pyglet.window.Window):
 
     def __init__(self):
         pyglet.window.Window.__init__(self, caption='I Robot ?', resizable=True) 
+        self._set_icons()
         self._scene = None
         self.change_scene(game.Game(self))
         self._init_window_size()
@@ -22,6 +24,12 @@ class World(pyglet.window.Window):
 
     def run(self):
         pyglet.app.run()
+
+    def _set_icons(self):
+        icons = ['16', '32', '64', '128']
+        names = ["icons/%s.png" %(n) for n in icons]
+        images = [common.load_image(name) for name in names]
+        self.set_icon(*images)
 
     def change_scene(self, scene):
         if self._scene:
@@ -38,18 +46,15 @@ class World(pyglet.window.Window):
     def on_key_press(self, symbol, extra):
         if symbol == pyglet.window.key.F:
             self.set_fullscreen(not self.fullscreen)
+            self.capture_mouse()
         elif symbol in [pyglet.window.key.ESCAPE, pyglet.window.key.Q]:
             import sys
             sys.exit(0)
 
 
-
-
-
-
-
-
-
+    def capture_mouse(self):
+        self.set_exclusive_mouse(True)
+        self.set_mouse_visible(False)
 
 
     # TODO: Llevar estas rutinas a otra clase abstracta, o extender "cocos.director".

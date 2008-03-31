@@ -31,6 +31,7 @@ class Player:
     def set_state(self, index, reset_counter=True):
         self.state = index
         self.image = self._images[index]
+
         if reset_counter:
             self._restart()
 
