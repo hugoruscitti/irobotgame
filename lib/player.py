@@ -5,7 +5,7 @@ DELAY_TO_RETURN = 0.4
 
 class Player:
 
-    def __init__(self):
+    def __init__(self, x=60, y=170):
         self._load_images()
         self.set_state(5)
         self.x = 60
@@ -41,8 +41,9 @@ class Player:
     def draw(self):
         self.image.blit(self.x, self.y)
 
+
     def update(self, dt):
-        self.step += dt
+        self.step += 0.01
 
         if self.step > DELAY_TO_RETURN:
             self.set_state(5)
