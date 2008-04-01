@@ -7,3 +7,6 @@ class Scene:
     def update(self, dt):
         print "Error: se debe extender el metodo Scene:update"
         pass
+
+    def destroy(self):
+        pass
