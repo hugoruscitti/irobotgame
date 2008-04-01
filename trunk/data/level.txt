@@ -1,0 +1,3 @@
+# First line: move     Second line: seconds to complet movement
+      2   2
+      3   4
