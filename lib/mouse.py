@@ -19,7 +19,7 @@ class Mouse:
     Para que este objeto ande hay que hacer 'window.set_exclusive_mouse(True)' con
     anterioridad."""
 
-    def __init__(self, player):
+    def __init__(self, player, game):
         self.x = CENTER_X
         self.y = CENTER_Y
         self.are_in = False
@@ -27,6 +27,7 @@ class Mouse:
         self._load_images()
 
         self.player = player
+        self.game = game
 
 
     def draw(self):
@@ -123,6 +124,7 @@ class Mouse:
         for index, name, bottom, top in pieces:
             if bottom < angle < top:
                 self.player.set_state(index, reset_counter=True)
+                self.game.set_state(index)
             else:
                 pass
 
