@@ -17,10 +17,12 @@ class World(pyglet.window.Window):
         self.enable_alpha_blending()
 
         if config.DEBUG:
-            self.set_location(400, 400)
             self.fps = pyglet.clock.ClockDisplay()
         else:
             self.fps = None
+
+        if config.MOVE_WINDOW:
+            self.set_location(400, 400)
 
     def run(self):
         pyglet.app.run()
