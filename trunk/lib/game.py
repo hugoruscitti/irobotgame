@@ -25,7 +25,7 @@ class Game(Scene):
         pyglet.clock.schedule_interval(self.on_update_level, 1)
 
     def on_update_level(self, dt):
-        self.level.get()
+        print self.level.get()
 
     def on_draw(self):
         self.world.clear()            # FIXME: evitar que se tapan los bordes

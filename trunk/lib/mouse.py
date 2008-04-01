@@ -5,7 +5,7 @@ import math
 
 CENTER_X = 420
 CENTER_Y = 200
-SCALE_TO_REDUCE = 6.0
+SCALE_TO_REDUCE = 30.0
 FORCE = 3
 
 
