@@ -15,15 +15,22 @@ class Level:
 
         También puede retornar None si no hay movimiento para realizar."""
 
-        
-        self._advance()
+        return self._advance()
 
     def _advance(self):
         self.step += 1
 
-        if self.step > len(self.moves):
+        if self.step >= len(self.moves):
             # TODO: Terminar el nivel desde acá
             print "Llega la final del nivel"
+            return None
+        else:
+            print self.step
+            items = (self.moves[self.step], self.timeline[self.step])
+            if items[0] == ' ' and items[1] == ' ':
+                return None
+            else:
+                return items
 
     def _load_map(self):
         stream = common.open('level.txt')

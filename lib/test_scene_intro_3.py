@@ -16,15 +16,20 @@ layer = common.load_image('layer.png')
 sky = ActionSprite(ima_background)
 sky.y = 118
 sky.x = 100
-sky.do(Move((0, 0), 6))
+sky.do(Move((0, -5), 6))
 
-castle = ActionSprite(common.load_image('intro/castle.png'))
-castle.x = 95
+
+image = common.load_image('intro/castle.png')
+image.anchor_x = image.width / 2
+castle = ActionSprite(image)
+castle.x = 320
 castle.y = 100
+castle.do(Move((0, -10), 4))
 
 intro_1 = ActionSprite(common.load_image('intro/tree.png'))
 intro_1.x = 95
-intro_1.y = 100
+intro_1.y = 80
+intro_1.do(Move((0, 20), 4))
 
 player = ActionSprite(common.load_image('intro/player.png'))
 player.x = 400
