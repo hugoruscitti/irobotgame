@@ -13,6 +13,9 @@ def load_image(path):
 def load_music(path):
     return pyglet.media.load(os.path.join(DATADIR, path))
 
+def load_sound(path):
+    return pyglet.media.load(os.path.join(DATADIR, path))
+
 def open(path):
     return file(os.path.join(DATADIR, path), "rt")
 
