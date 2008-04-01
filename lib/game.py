@@ -27,6 +27,8 @@ class Game(Scene):
         self.world.capture_mouse()
         self.audio = audio.Audio()
         self.level = level.Level()
+        self.sound_s1 = common.load_sound('sounds/s1.wav')
+        self.sound = pyglet.media.Player()
 
         pyglet.clock.schedule_interval(self.on_update_level, 1)
 
@@ -47,6 +49,7 @@ class Game(Scene):
         image.anchor_x = image.width / 2
         image.anchor_y = image.height / 2
         sprite = ActionSprite(image)
+        sprite.done = False
         sprite.x = 520
         sprite.y = 160
         sprite.opacity = 0
@@ -58,8 +61,21 @@ class Game(Scene):
     def set_state(self, index):
         if self.actual_move == str(index):
             sprite = self.sprites[-1]
-            speed = 0.3
-            sprite.do(Scale(2, speed) | FadeOut(speed))
+
+            if not sprite.done:
+                self._play_random()
+                sprite.done = True
+                speed = 0.3
+                sprite.do(Scale(2, speed) | FadeOut(speed))
+
+    def _play_random(self):
+        print self.sound.source
+        try:
+            self.sound.queue(self.sound_s1)
+            self.sound.seek(0)
+        except:
+            pass
+        self.sound.play()
 
     def on_draw(self):
         self.world.clear()            # FIXME: evitar que se tapan los bordes
@@ -75,6 +91,7 @@ class Game(Scene):
         self.mouse.update(dt)
         self.player.update(dt)
         self.audio.update()
+        pyglet.media.dispatch_events()
 
     def on_mouse_motion(self, x, y, dx, dy):
         # FIXME: Creo que solo habría que actualizar el mouse cuando el tipo
