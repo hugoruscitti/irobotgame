@@ -9,27 +9,30 @@ window = pyglet.window.Window()
 glEnable(GL_BLEND)
 glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 
-ima_background = common.load_image('intro/sky2.png')
+ima_background = common.load_image('intro/sky3.png')
 layer = common.load_image('layer.png')
 
 
 sky = ActionSprite(ima_background)
 sky.y = 118
 sky.x = 100
-sky.do(Move((-200, 0), 6))
+sky.do(Move((0, 0), 6))
 
-intro_1 = ActionSprite(common.load_image('intro/front.png'))
-intro_1.x = 120
+castle = ActionSprite(common.load_image('intro/castle.png'))
+castle.x = 95
+castle.y = 100
+
+intro_1 = ActionSprite(common.load_image('intro/tree.png'))
+intro_1.x = 95
 intro_1.y = 100
-intro_1.scale = 1.2
 
-run = ActionSprite(common.load_image('intro/rat.png'))
-run.x = -500
-run.y = 90
-run.scale = 1.5
-run.do(Jump(10, 300, 10, 0.4) + Delay(1.5) + Jump(10, 700, 10, 0.4))
+player = ActionSprite(common.load_image('intro/player.png'))
+player.x = 400
+player.y = 90
 
-sprites = [sky, intro_1, run]
+player.do(Jump(5, 40, 10, 10))
+
+sprites = [sky, castle, intro_1, player]
 sprites_front = []
 
 @window.event
