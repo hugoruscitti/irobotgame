@@ -37,8 +37,8 @@ class Level:
         lines = stream.readlines()
         stream.close()
 
-        self.moves = lines[1]
-        self.timeline = lines[2]
+        self.moves = lines[1].strip()
+        self.timeline = lines[2].strip()
 
         if len(self.moves) != len(self.timeline):
             #TODO: lanzar una excepción, tal vez...
