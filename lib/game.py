@@ -28,9 +28,21 @@ class Game(Scene):
         self.audio = audio.Audio()
         self.level = level.Level()
         self.sound_s1 = common.load_sound('sounds/s1.wav')
+        self.sound_s2 = common.load_sound('sounds/s2.wav')
+        self.sound_s3 = common.load_sound('sounds/s3.wav')
+        self.sound_s4 = common.load_sound('sounds/s4.wav')
+        self.sound_fail = common.load_sound('sounds/fail.wav')
         self.sound = pyglet.media.Player()
 
-        pyglet.clock.schedule_interval(self.on_update_level, 1)
+        self.sounds = [
+                self.sound_s1,
+                self.sound_s2,
+                self.sound_s3,
+                self.sound_s4,
+                self.sound_fail,
+                ]
+
+        pyglet.clock.schedule_interval(self.on_update_level, 0.7)
 
         # TODO: Crear un módulo nuevo para esta verificación
         self.actual_move = 0
@@ -69,12 +81,10 @@ class Game(Scene):
                 sprite.do(Scale(2, speed) | FadeOut(speed))
 
     def _play_random(self):
-        print self.sound.source
-        try:
-            self.sound.queue(self.sound_s1)
-            self.sound.seek(0)
-        except:
-            pass
+        import random
+        sound = self.sounds[random.randint(0, 4)]
+
+        self.sound.queue(sound)
         self.sound.play()
 
     def on_draw(self):
