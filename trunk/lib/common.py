@@ -14,7 +14,7 @@ def load_music(path):
     return pyglet.media.load(os.path.join(DATADIR, path))
 
 def load_sound(path):
-    return pyglet.media.load(os.path.join(DATADIR, path))
+    return pyglet.media.load(os.path.join(DATADIR, path), streaming=False)
 
 def open(path):
     return file(os.path.join(DATADIR, path), "rt")

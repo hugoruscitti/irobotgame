@@ -3,6 +3,23 @@ import common
 
 DELAY_TO_RETURN = 0.4
 
+
+class State:
+
+    def __init__(self, player):
+        self.player = player
+
+class Dancing(State):
+
+    def __init__(self, player):
+        State.__init__(self, player)
+
+class Motion(State):
+
+    def __init__(self, player):
+        State.__init__(self, player)
+
+
 class Player:
 
     def __init__(self, x=60, y=170):
@@ -43,7 +60,7 @@ class Player:
 
 
     def update(self, dt):
-        self.step += 0.01
+        self.step += dt
 
         if self.step > DELAY_TO_RETURN:
             self.set_state(5)
