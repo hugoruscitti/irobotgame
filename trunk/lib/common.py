@@ -13,6 +13,9 @@ def load_image(path):
 def load_music(path):
     return pyglet.media.load(os.path.join(DATADIR, path))
 
+def open(path):
+    return file(os.path.join(DATADIR, path), "rt")
+
 def get_dist((x0, y0), (x1, y1)):
     dx = abs(x1 - x0)
     dy = abs(y1 - y0)

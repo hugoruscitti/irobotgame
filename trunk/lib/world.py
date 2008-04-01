@@ -35,6 +35,7 @@ class World(pyglet.window.Window):
         if self._scene:
             self.pop_handlers()
             pyglet.clock.unschedule(self._scene.update)
+            self._scene.destroy()
 
         self._scene = scene
         self.push_handlers(scene)

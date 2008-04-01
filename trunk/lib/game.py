@@ -1,11 +1,13 @@
 # -*- encoding: utf-8 -*-
+import pyglet
+
 from scene import Scene
 import common
 import mouse
 import config
 import player
 import audio
-
+import level
 
 class Game(Scene):
     "Escena de juego donde los personajes están en el escenario."
@@ -18,6 +20,12 @@ class Game(Scene):
         self.mouse = mouse.Mouse(self.player)
         self.world.capture_mouse()
         self.audio = audio.Audio()
+        self.level = level.Level()
+
+        pyglet.clock.schedule_interval(self.on_update_level, 1)
+
+    def on_update_level(self, dt):
+        self.level.get()
 
     def on_draw(self):
         self.world.clear()            # FIXME: evitar que se tapan los bordes
