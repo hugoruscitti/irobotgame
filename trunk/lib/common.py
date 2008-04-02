@@ -28,3 +28,5 @@ def get_dist((x0, y0), (x1, y1)):
 def are_same_class(a, b):
     return a.__class__.__name__ == b.__class__.__name__
 
+def is_continue_key(symbol):
+    return symbol == pyglet.window.key.RETURN

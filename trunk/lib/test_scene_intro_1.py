@@ -10,10 +10,10 @@ window = pyglet.window.Window()
 glEnable(GL_BLEND)
 glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 
-ima_background = common.load_image('intro/sky2.png')
 layer = common.load_image('layer.png')
 
 
+ima_background = common.load_image('intro/sky2.png')
 sky = ActionSprite(ima_background)
 sky.y = 118
 sky.do(Move((-100, 0), 6))
