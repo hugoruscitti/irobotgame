@@ -12,11 +12,10 @@ class Audio:
             self._load_sounds()
 
     def _load_music(self):
-        self.game_music = common.load_music('music/554_bebeto_Ambient_loop.mp3')
+        self.game_music = common.load_music('music/intro.wav')
         self.music = pyglet.media.Player()
         self.music.eos_action = 'loop'
         self.music.queue(self.game_music)
-        self.music.play()
 
     def _load_sounds(self):
         self.sound = pyglet.media.Player()

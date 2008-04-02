@@ -6,6 +6,7 @@ import common
 import config
 import game
 import audio
+import presents
 
 class World(pyglet.window.Window):
 
@@ -14,7 +15,12 @@ class World(pyglet.window.Window):
         self.audio = audio.Audio()
         self._set_icons()
         self._scene = None
-        self.change_scene(game.Game(self))
+
+        if config.DEBUG:
+            self.change_scene(game.Game(self))
+        else:
+            self.change_scene(presents.Presents(self))
+
         self._init_window_size()
         self.enable_alpha_blending()
 
@@ -46,7 +52,8 @@ class World(pyglet.window.Window):
         self.push_handlers(scene)
 
     def on_draw(self):
-        self.fps.draw()
+        if config.DEBUG:
+            self.fps.draw()
 
     def update(self, dt):
         self.audio.update()
