@@ -8,7 +8,6 @@ import common
 import mouse
 import config
 import player
-import audio
 import level
 
 class Game(Scene):
@@ -22,27 +21,15 @@ class Game(Scene):
 
         self.sprites = []
 
-        self.player = player.Player()
+        self.player = player.Player(80, 100, world.audio)
         self.mouse = mouse.Mouse(self.player, self)
         self.world.capture_mouse()
-        self.audio = audio.Audio()
         self.level = level.Level()
-        self.sound_s1 = common.load_sound('sounds/s1.wav')
-        self.sound_s2 = common.load_sound('sounds/s2.wav')
-        self.sound_s3 = common.load_sound('sounds/s3.wav')
-        self.sound_s4 = common.load_sound('sounds/s4.wav')
-        self.sound_fail = common.load_sound('sounds/fail.wav')
-        self.sound = pyglet.media.Player()
+        # TODO: 'audio' debería estar en World
+        # TODO: quitar los objetos 'sound' de acá. Integrar al objeto audio
 
-        self.sounds = [
-                self.sound_s1,
-                self.sound_s2,
-                self.sound_s3,
-                self.sound_s4,
-                self.sound_fail,
-                ]
 
-        pyglet.clock.schedule_interval(self.on_update_level, 0.7)
+        pyglet.clock.schedule_interval(self.on_update_level, 0.5)
 
         # TODO: Crear un módulo nuevo para esta verificación
         self.actual_move = 0
@@ -71,21 +58,20 @@ class Game(Scene):
         self.actual_move = motion
 
     def set_state(self, index):
+
         if self.actual_move == str(index):
+            fail = False
             sprite = self.sprites[-1]
 
             if not sprite.done:
-                self._play_random()
                 sprite.done = True
                 speed = 0.3
                 sprite.do(Scale(2, speed) | FadeOut(speed))
+        else:
+            fail = True
 
-    def _play_random(self):
-        import random
-        sound = self.sounds[random.randint(0, 4)]
-
-        self.sound.queue(sound)
-        self.sound.play()
+        if isinstance(self.player.state, player.Dancing):
+            self.player.change_state(player.Motion(self.player, index, fail))
 
     def on_draw(self):
         self.world.clear()            # FIXME: evitar que se tapan los bordes
@@ -100,8 +86,6 @@ class Game(Scene):
     def update(self, dt):
         self.mouse.update(dt)
         self.player.update(dt)
-        self.audio.update()
-        pyglet.media.dispatch_events()
 
     def on_mouse_motion(self, x, y, dx, dy):
         # FIXME: Creo que solo habría que actualizar el mouse cuando el tipo
