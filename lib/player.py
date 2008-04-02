@@ -32,7 +32,7 @@ class Fail(State):
         State.__init__(self, player)
         self.step = 0
         player.set_image(0)
-        player.game.create_drop(180, 300)
+        player.game.create_drop(200, 300)
 
     def update(self, dt):
         self.step += dt
@@ -116,15 +116,6 @@ class Player:
     def set_image(self, index):
         self.image = self._images[index]
 
-    '''
-    def set_state(self, index, reset_counter=True):
-        self.state = index
-        self.image = self._images[index]
-
-        if reset_counter:
-            self._restart()
-    '''
-
     def _restart(self):
         self.step = 0.0
 
@@ -134,20 +125,3 @@ class Player:
     def update(self, dt):
         self.step += dt
         self.state.update(dt)
-
-        '''
-        if self.step > DELAY_TO_RETURN:
-            self.set_state(5)
-        else:
-            if self.state in [5, 51, 52]:
-                sub_frame = int(self.step * 10)
-
-                if sub_frame == 0:
-                    self.set_state(5, False)
-                elif sub_frame == 1:
-                    self.set_state(51, False)
-                elif sub_frame == 2:
-                    self.set_state(52, False)
-                elif sub_frame == 3:
-                    self.set_state(53, False)
-        '''
