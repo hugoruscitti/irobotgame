@@ -3,11 +3,14 @@ import common
 import motion
 
 class Level:
-    "Representa una nivel del juego."
+    """Representa una nivel del juego.
 
-    def __init__(self):
+    Conoce al grupo de robots que baila..."""
+
+    def __init__(self, group):
         self._load_map()
         self.step = 0
+        self.group = group
         self.sprites = []
 
     def update(self):
@@ -17,7 +20,9 @@ class Level:
         item = self._advance()
 
         if item:
-            self.sprites.append(motion.Motion(*item))
+            move_id, delay = item
+            self.group.do_move(move_id, delay)
+            self.sprites.append(motion.Motion(move_id, delay))
 
     def _advance(self):
         self.step += 1
