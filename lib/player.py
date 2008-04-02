@@ -89,6 +89,7 @@ class Player:
         self.audio = game.world.audio
 
         self._load_images()
+        self.set_image(5)
         self._restart()
 
         self.change_state(Dancing(self))
