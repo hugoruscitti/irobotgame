@@ -1,35 +1,34 @@
 # -*- encoding: utf-8 -*-
 import common
+import motion
 
 class Level:
 
     def __init__(self):
         self._load_map()
         self.step = 0
+        self.sprites = []
 
-    def get(self):
-        """Avanza en la linea de tiempo y retorna el elemento actual.
+    def update(self):
+        """Avanza en la linea de tiempo y genera movimientos si es
+        necesario."""
 
-        La tupla que retorna tiene el movimiento y la cantidad de segundos
-        para realizarla.
+        item = self._advance()
 
-        También puede retornar None si no hay movimiento para realizar."""
-
-        return self._advance()
+        if item:
+            self.sprites.append(motion.Motion(*item))
 
     def _advance(self):
         self.step += 1
 
-        if self.step >= len(self.moves):
-            # TODO: Terminar el nivel desde acá
-            return None
-        else:
+        if self.step < len(self.moves):
             items = (self.moves[self.step], self.timeline[self.step])
 
-            if items[0] == ' ' and items[1] == ' ':
-                return None
-            else:
+            if items[0] != ' ' or items[1] != ' ':
                 return items
+        else:
+            # TODO: hacer algo para indicar el cambio de nivel
+            print "Ha finalizado el nivel..."
 
     def _load_map(self):
         stream = common.open('level.txt')
@@ -43,6 +42,5 @@ class Level:
             #TODO: lanzar una excepción, tal vez...
             print "eh!, la lista de movimientos y linea de tiempo difieren."
 
-
-if __name__ == '__main__':
-    level = Level()
+    def get_motions_by_code(self, code):
+        return [x for x in self.sprites if x.are_active and x.motion == code]
