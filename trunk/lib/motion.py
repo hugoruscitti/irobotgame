@@ -12,7 +12,7 @@ class Motion(ActionSprite):
         self.y = 160
         self.opacity = 0
         self.motion = int(motion)
-        self.delay = int(delay)
+        self.delay = int(delay) / 2.0
         self.do(FadeIn(SPEED) + Delay(self.delay))
         self.are_active = True
         self.timer = 0
@@ -39,14 +39,16 @@ class Motion(ActionSprite):
     def update(self, dt):
         self.timer += dt
 
-        if self.timer > SPEED + self.delay:
+        if self.are_active and self.timer > SPEED + self.delay:
             self.image = self.fail
+            self.are_active = False
             #self.do(FadeOut(SPEED))
 
             # TODO: esto es otro sucio hack...
             self.timer = -10
-        elif 0 > self.timer > -9.5:
+        elif 0 > self.timer > -9:
             self._delete()
 
     def _delete(self):
+        self.stop()
         self.delete_me = True

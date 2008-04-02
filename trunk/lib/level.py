@@ -3,6 +3,7 @@ import common
 import motion
 
 class Level:
+    "Representa una nivel del juego."
 
     def __init__(self):
         self._load_map()
@@ -35,8 +36,8 @@ class Level:
         lines = stream.readlines()
         stream.close()
 
-        self.moves = lines[1].strip()
-        self.timeline = lines[2].strip()
+        self.moves = lines[1].rstrip()
+        self.timeline = lines[2].rstrip()
 
         if len(self.moves) != len(self.timeline):
             #TODO: lanzar una excepción, tal vez...
@@ -44,3 +45,14 @@ class Level:
 
     def get_motions_by_code(self, code):
         return [x for x in self.sprites if x.are_active and x.motion == code]
+
+    def clear_old_sprites(self):
+        "Limpia los sprites que tienen la marca 'delete_me'."
+        removes = [x for x in self.sprites if x.delete_me]
+
+        for r in removes:
+            self.sprites.remove(r)
+
+    def are_empty(self):
+        with_live = [x for x in self.sprites if x.are_active]
+        return len(with_live) == 0
