@@ -9,6 +9,7 @@ import mouse
 import config
 import player
 import level
+import effects
 
 class Game(Scene):
     "Escena de juego donde los personajes están en el escenario."
@@ -21,7 +22,7 @@ class Game(Scene):
 
         self.sprites = []
 
-        self.player = player.Player(80, 100, world.audio)
+        self.player = player.Player(80, 100, self)
         self.mouse = mouse.Mouse(self.player, self)
         self.world.capture_mouse()
         self.level = level.Level()
@@ -83,6 +84,7 @@ class Game(Scene):
         for s in self.sprites:
             s.draw()
 
+
     def update(self, dt):
         self.mouse.update(dt)
         self.player.update(dt)
@@ -96,3 +98,6 @@ class Game(Scene):
 
     def on_mouse_drag(self, x, y, dx, dy, button, extra):
         self.mouse.on_mouse_motion(x, y, dx, dy)
+
+    def create_drop(self, x, y):
+        self.sprites.append(effects.Drop(x, y))
