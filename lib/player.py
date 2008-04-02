@@ -32,6 +32,7 @@ class Fail(State):
         State.__init__(self, player)
         self.step = 0
         player.set_image(0)
+        player.game.create_drop(180, 300)
 
     def update(self, dt):
         self.step += dt
@@ -80,11 +81,12 @@ class Motion(State):
 class Player:
     "Representa a la protagonista del juego que baila."
 
-    def __init__(self, x, y, audio):
+    def __init__(self, x, y, game):
         self.x = x
         self.y = y
         self.state = None
-        self.audio = audio
+        self.game = game
+        self.audio = game.world.audio
 
         self._load_images()
         self._restart()
