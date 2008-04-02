@@ -5,11 +5,13 @@ from pyglet.gl import *
 import common
 import config
 import game
+import audio
 
 class World(pyglet.window.Window):
 
     def __init__(self):
         pyglet.window.Window.__init__(self, caption='I Robot ?', resizable=True) 
+        self.audio = audio.Audio()
         self._set_icons()
         self._scene = None
         self.change_scene(game.Game(self))
@@ -24,6 +26,8 @@ class World(pyglet.window.Window):
         if config.MOVE_WINDOW:
             self.set_location(400, 400)
 
+        pyglet.clock.schedule_interval(self.update, 1/60.0)
+
     def run(self):
         pyglet.app.run()
 
@@ -36,15 +40,17 @@ class World(pyglet.window.Window):
     def change_scene(self, scene):
         if self._scene:
             self.pop_handlers()
-            pyglet.clock.unschedule(self._scene.update)
             self._scene.destroy()
 
         self._scene = scene
         self.push_handlers(scene)
-        pyglet.clock.schedule_interval(scene.update, 1/60.0)
 
     def on_draw(self):
         self.fps.draw()
+
+    def update(self, dt):
+        self.audio.update()
+        self._scene.update(dt)
 
     def on_key_press(self, symbol, extra):
         if symbol == pyglet.window.key.F:

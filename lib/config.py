@@ -1,5 +1,5 @@
 DEBUG = True
-MOVE_WINDOW = False
-AUDIO = False
+MOVE_WINDOW = True
+AUDIO = True
 SHOW_MOUSE = False
 SHOW_PAD = True

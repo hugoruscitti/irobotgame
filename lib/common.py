@@ -24,3 +24,7 @@ def get_dist((x0, y0), (x1, y1)):
     dy = abs(y1 - y0)
     
     return math.sqrt(dx * dx + dy * dy)
+
+def are_same_class(a, b):
+    return a.__class__.__name__ == b.__class__.__name__
+

@@ -123,7 +123,6 @@ class Mouse:
 
         for index, name, bottom, top in pieces:
             if bottom < angle < top:
-                self.player.set_state(index, reset_counter=True)
                 self.game.set_state(index)
             else:
                 pass
