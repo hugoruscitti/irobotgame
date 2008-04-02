@@ -1,6 +1,5 @@
 # -*- encoding: utf-8 -*-
 import pyglet
-
 from cocos.actions import *
 
 from scene import Scene
@@ -10,6 +9,7 @@ import config
 import player
 import level
 import effects
+import group
 
 class Game(Scene):
     "Escena de juego donde los personajes están en el escenario."
@@ -26,6 +26,7 @@ class Game(Scene):
         self.mouse = mouse.Mouse(self.player, self)
         self.world.capture_mouse()
         self.level = level.Level()
+        self.group = group.Group()
 
         pyglet.clock.schedule_interval(self.on_update_level, 0.5)
 
@@ -58,6 +59,7 @@ class Game(Scene):
         self.world.clear()            # FIXME: evitar que se tapan los bordes
         self._background.blit(0, 0)
         self._layer.blit(0, 0)
+        self.group.draw()
         self.player.draw()
         self.mouse.draw()
 
@@ -70,6 +72,7 @@ class Game(Scene):
     def update(self, dt):
         self.mouse.update(dt)
         self.player.update(dt)
+        self.group.update(dt)
 
         for sprite in self.level.sprites:
             sprite.update(dt)
