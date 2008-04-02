@@ -22,11 +22,11 @@ class Game(Scene):
 
         self.sprites = []
 
-        self.player = player.Player(100, 100, self)
+        self.player = player.Player(100, 80, self)
         self.mouse = mouse.Mouse(self.player, self)
         self.world.capture_mouse()
-        self.level = level.Level()
         self.group = group.Group()
+        self.level = level.Level(self.group)
 
         pyglet.clock.schedule_interval(self.on_update_level, 0.5)
 
@@ -54,6 +54,10 @@ class Game(Scene):
         else:
             if isinstance(self.player.state, player.Dancing):
                 self.player.change_state(player.Motion(self.player, code, fail))
+
+                # Si falla hace que se enoje uno de los robots
+                if fail:
+                    self.group.stop_dancing_one_robot()
 
     def on_draw(self):
         self.world.clear()            # FIXME: evitar que se tapan los bordes

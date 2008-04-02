@@ -41,7 +41,7 @@ class Fail(State):
             self.player.change_state(Dancing(self.player))
 
 class Dancing(State):
-    "Vaila en su sitio."
+    "Baila en su sitio."
 
     def __init__(self, player):
         State.__init__(self, player)
@@ -78,6 +78,7 @@ class Motion(State):
                 self.player.change_state(Dancing(self.player))
 
 
+# TODO: Hacer que el Robot y Player extiendan una misma clase (son muy similares)
 class Player:
     "Representa a la protagonista del juego que baila."
 

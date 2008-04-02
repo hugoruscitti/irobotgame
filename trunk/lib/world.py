@@ -19,6 +19,8 @@ class World(pyglet.window.Window):
         if config.DEBUG:
             self.change_scene(game.Game(self))
         else:
+            #import title
+            #self.change_scene(title.Title(self))
             self.change_scene(presents.Presents(self))
 
         self._init_window_size()

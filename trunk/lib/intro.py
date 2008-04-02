@@ -2,6 +2,7 @@
 from cocos.actions import *
 from scene import Scene
 import common
+import title
 
 class Intro(Scene):
 
@@ -110,6 +111,7 @@ class SubScene2(SubScene):
     def next(self):
         self.father.change_subscene(SubScene3(self.father))
 
+
 class SubScene3(SubScene):
 
     def __init__(self, father):
@@ -117,13 +119,31 @@ class SubScene3(SubScene):
         self._create_sprites()
 
     def _create_sprites(self):
-        pass
+        sky = ActionSprite(common.load_image('intro/sky2.png'))
+        sky.y = 118
+        sky.do(Move((-200, 0), 6))
+
+        walk = ActionSprite(common.load_image('intro/walk.png'))
+        walk.y = 130
+        walk.x = 120
+
+        #TODO: reducir el tamaño de esta imágen, es grande al pedo.
+        ima_background = common.load_image('intro/back_subscene_3.png')
+        background = ActionSprite(ima_background)
+        background.x = 0
+        background.y = 0
+
+        self.sprites = [sky, background, walk]
 
     def update(self, dt):
         pass
 
     def on_draw(self):
-        pass
+        for s in self.sprites:
+            s.draw()
+
+        self.layer.blit(0, 0)
 
     def next(self):
-        pass
+        world = self.father.world
+        world.change_scene(title.Title(world))
