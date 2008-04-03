@@ -33,6 +33,8 @@ class Intro(Scene):
     def skip_scene(self):
         self.world.change_scene(title.Title(self.world))
 
+    def on_mouse_press(self, x, y, button, extra=None):
+        self.skip_scene()
 
 class SubScene:
 
@@ -161,3 +163,4 @@ class SubScene3(SubScene):
         self.stop_all()
         world = self.father.world
         world.change_scene(title.Title(world))
+

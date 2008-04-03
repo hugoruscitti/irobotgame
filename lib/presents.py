@@ -66,3 +66,7 @@ class Presents(Scene):
     def on_key_press(self, symbol, state):
         if common.is_continue_key(symbol):
             self.skip_scene()
+
+    def on_mouse_press(self, x, y, button, extra=None):
+        self.skip_scene()
+

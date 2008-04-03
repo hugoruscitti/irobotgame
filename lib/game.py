@@ -10,6 +10,7 @@ import player
 import level
 import effects
 import group
+import title
 
 class Game(Scene):
     "Escena de juego donde los personajes están en el escenario."
@@ -88,6 +89,11 @@ class Game(Scene):
         # movimiento, antes no. Por ello esto se tendría que arreglar
         # a futuro.
         self.mouse.on_mouse_motion(x, y, dx, dy)
+
+    def on_key_press(self, symbol, extra):
+        if common.is_cancel_key(symbol):
+            pyglet.clock.unschedule(self.on_update_level)
+            self.world.change_scene(title.Title(self.world))
 
     def on_mouse_drag(self, x, y, dx, dy, button, extra):
         self.mouse.on_mouse_motion(x, y, dx, dy)
