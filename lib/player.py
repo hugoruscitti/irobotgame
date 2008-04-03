@@ -76,6 +76,7 @@ class Motion(State):
                 self.player.change_state(Fail(self.player))
             else:
                 self.player.change_state(Dancing(self.player))
+                self.player.game.on_player_stop_motion()
 
 
 # TODO: Hacer que el Robot y Player extiendan una misma clase (son muy similares)
