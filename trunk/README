@@ -1,16 +1,51 @@
+
+
+Authors
+=======
+
+    - Hugo Ruscitti <hugoruscitti@gmail.com>
+    - Cristian Villalba <cristian.villalba@gmail.com>
+    - Walter Velazquez <wgv_tattoo@yahoo.com.ar>
+    - Javier Da Silva <javierdasilva21@hotmail.com>
+
+    there are a AUTHORS file too.
+
+
+License
+=======
+
+    This game is free software under the terms of the GPLv3 (The GNU General
+    Public License v3), both code and art.
+
+    If you have some doubt:
+
+        - read the COPYING file
+        - or this web: http://www.gnu.org/licenses/gpl-3.0.html
+        - or send me a mail: hugoruscitti@gmail.com
+
+
 More info
 =========
 
   * http://www.losersjuegos.com.ar/
         (our web site)
+
   * http://www.pyweek.org
         (web site of the challenge)
 
 
-Some tips
-=========
+
+
+Some tips of the game
+=====================
 
   * Do you like the intro scene?, you can repeat'em pressing the "r" key
     in the title scene.
 
-  *
+  * "F" key allow you to set a fullscreen window.
+
+  * The "lib/config.py" file has some contrant to change the game behavior.
+
+  * You boss is comming?, type 'q' and the game quit inmediatly ! ...
+
+  * You has no money? neither i :)

@@ -1,4 +1,6 @@
 # -*- encoding: utf-8 -*-
+import sys
+
 import pyglet
 from pyglet.gl import *
 
@@ -70,8 +72,9 @@ class World(pyglet.window.Window):
         if symbol == pyglet.window.key.F:
             self.set_fullscreen(not self.fullscreen)
             self.capture_mouse()
-        elif symbol in [pyglet.window.key.ESCAPE, pyglet.window.key.Q]:
-            import sys
+        elif symbol == pyglet.window.key.Q:
+            # The boss key handler
+            # o como decimos en el barrio: pa' que el jefe no te descubra jugando...
             sys.exit(0)
 
 

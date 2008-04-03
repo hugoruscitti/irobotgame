@@ -30,3 +30,6 @@ def are_same_class(a, b):
 
 def is_continue_key(symbol):
     return symbol in [pyglet.window.key.RETURN, pyglet.window.key.SPACE]
+
+def is_cancel_key(symbol):
+    return symbol == pyglet.window.key.ESCAPE
