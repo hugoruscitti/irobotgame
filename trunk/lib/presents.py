@@ -6,6 +6,9 @@ import common
 from scene import Scene
 import intro
 
+import text
+
+MSG_FULLSCREEN = "Press 'f' key to alternate fullscreen / window."
 
 class Presents(Scene):
 
@@ -14,6 +17,7 @@ class Presents(Scene):
         self._create_sprites()
         self.background = common.load_image('presents/background.png')
         self.step = 0.0
+        self.text = text.Text(MSG_FULLSCREEN, 180, 10)
 
     def _create_sprites(self):
         images = [
@@ -45,6 +49,7 @@ class Presents(Scene):
         self.background.blit(0, 0)
         self.logo.draw()
         self.pyweek.draw()
+        self.text.draw()
 
     def update(self, dt):
         # TODO: Evitar la comprobación constante. Una solución podría ser

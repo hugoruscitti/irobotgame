@@ -8,9 +8,12 @@ from cocos.actions import *
 from scene import Scene
 import game
 import common
+import text
+import presents
 
 LEFT_X, LEFT_Y = 88, 82
 RIGHT_X, RIGHT_Y = 388, 79
+MSG_START = 'Press space, enter or "click" to start the game.'
 
 class Title(Scene):
 
@@ -19,6 +22,7 @@ class Title(Scene):
         self.step = 0
         self._create_sprites()
         self.background = common.load_image('black.png')
+        self.text = text.Text(MSG_START, 170, 10)
 
     def _create_sprites(self):
         player = ActionSprite(common.load_image('title/player.png'))
@@ -95,8 +99,14 @@ class Title(Scene):
         self.background.blit(0, 0)
         for s in self.sprites:
             s.draw()
+        self.text.draw()
+
+    def on_mouse_press(self, x, y, bottom, extra=None):
+        self.world.change_scene(game.Game(self.world))
 
     def on_key_press(self, symbol, extra):
         if common.is_continue_key(symbol):
             self.world.change_scene(game.Game(self.world))
+        elif symbol == pyglet.window.key.R:
+            self.world.change_scene(presents.Presents(self.world))
 

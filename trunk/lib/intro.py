@@ -1,8 +1,10 @@
 # -*- encoding: utf-8 -*-
 from cocos.actions import *
 from scene import Scene
+
 import common
 import title
+import text
 
 class Intro(Scene):
 
@@ -33,6 +35,7 @@ class Intro(Scene):
 
 
 class SubScene:
+
     def __init__(self, father):
         self.father = father
         self.layer = common.load_image('layer.png')
@@ -46,7 +49,7 @@ class SubScene1(SubScene):
     def __init__(self, father):
         SubScene.__init__(self, father)
         self._create_sprites()
-        # TODO: se repite varias veces, se prodría transladar a una clase padre.
+        self.text = text.History("You destiny is to scape ...")
 
     def _create_sprites(self):
         sky = ActionSprite(common.load_image('intro/sky2.png'))
@@ -72,6 +75,7 @@ class SubScene1(SubScene):
 
         self.layer.blit(0, 0)
         self.sprites[-1].draw()
+        self.text.draw()
 
     def next(self):
         self.stop_all()
@@ -83,6 +87,7 @@ class SubScene2(SubScene):
     def __init__(self, father):
         SubScene.__init__(self, father)
         self._create_sprites()
+        self.text = text.History("But for that is necessary a disguise...")
 
     def _create_sprites(self):
         sky = ActionSprite(common.load_image('intro/sky2.png'))
@@ -111,6 +116,7 @@ class SubScene2(SubScene):
             s.draw()
 
         self.layer.blit(0, 0)
+        self.text.draw()
 
     def next(self):
         self.stop_all()
@@ -122,6 +128,7 @@ class SubScene3(SubScene):
     def __init__(self, father):
         SubScene.__init__(self, father)
         self._create_sprites()
+        self.text = text.History("and dancing like a Robot !!!")
 
     def _create_sprites(self):
         sky = ActionSprite(common.load_image('intro/sky2.png'))
@@ -148,6 +155,7 @@ class SubScene3(SubScene):
             s.draw()
 
         self.layer.blit(0, 0)
+        self.text.draw()
 
     def next(self):
         self.stop_all()

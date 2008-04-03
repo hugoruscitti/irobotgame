@@ -18,7 +18,6 @@ class World(pyglet.window.Window):
         self.enable_alpha_blending()
         self._init_window_size()
 
-
         if config.DEBUG:
             self.fps = pyglet.clock.ClockDisplay()
         else:
@@ -38,6 +37,8 @@ class World(pyglet.window.Window):
             #import title
             #self.change_scene(title.Title(self))
             self.change_scene(presents.Presents(self))
+            #import intro
+            #self.change_scene(intro.Intro(self))
 
     def run(self):
         pyglet.app.run()
