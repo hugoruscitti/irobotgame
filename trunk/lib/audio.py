@@ -12,10 +12,21 @@ class Audio:
             self._load_sounds()
 
     def _load_music(self):
-        self.game_music = common.load_music('music/intro.wav')
+        self.musics = {
+                'intro': common.load_music('music/intro.mp3'),
+                'game': common.load_music('music/wer.mp3'),
+                }
+
         self.music = pyglet.media.Player()
         self.music.eos_action = 'loop'
-        self.music.queue(self.game_music)
+
+    def play_music(self, name):
+        if config.AUDIO:
+            self.music.queue(self.musics[name])
+            if self.music.playing:
+                self.music.next()
+            else:
+                self.music.play()
 
     def _load_sounds(self):
         self.sound = pyglet.media.Player()
