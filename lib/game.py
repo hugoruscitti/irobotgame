@@ -34,6 +34,8 @@ class Game(Scene):
         # TODO: Crear un módulo nuevo para esta verificación
         self.actual_move = 0
 
+        self.world.audio.play_music('game')
+
     def on_update_level(self, dt):
         self.level.update()
 
@@ -94,6 +96,7 @@ class Game(Scene):
         if common.is_cancel_key(symbol):
             pyglet.clock.unschedule(self.on_update_level)
             self.world.change_scene(title.Title(self.world))
+            self.world.audio.play_music('intro')
 
     def on_mouse_drag(self, x, y, dx, dy, button, extra):
         self.mouse.on_mouse_motion(x, y, dx, dy)
