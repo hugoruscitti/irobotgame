@@ -60,7 +60,6 @@ class Game(Scene):
                     self.group.stop_dancing_one_robot()
 
     def on_draw(self):
-        self.world.clear()            # FIXME: evitar que se tapan los bordes
         self._background.blit(0, 0)
         self._layer.blit(0, 0)
         self.group.draw()

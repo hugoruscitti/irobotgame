@@ -29,8 +29,7 @@ class Intro(Scene):
             self.skip_scene()
 
     def skip_scene(self):
-        import game
-        self.world.change_scene(game.Game(self.world))
+        self.world.change_scene(title.Title(self.world))
 
 
 class SubScene:

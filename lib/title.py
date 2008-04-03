@@ -18,6 +18,7 @@ class Title(Scene):
         Scene.__init__(self, world)
         self.step = 0
         self._create_sprites()
+        self.background = common.load_image('black.png')
 
     def _create_sprites(self):
         player = ActionSprite(common.load_image('title/player.png'))
@@ -91,8 +92,7 @@ class Title(Scene):
                 over.opacity = 0.0
 
     def on_draw(self):
-        self.world.clear()
-
+        self.background.blit(0, 0)
         for s in self.sprites:
             s.draw()
 
