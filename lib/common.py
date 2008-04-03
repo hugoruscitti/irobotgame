@@ -29,4 +29,4 @@ def are_same_class(a, b):
     return a.__class__.__name__ == b.__class__.__name__
 
 def is_continue_key(symbol):
-    return symbol == pyglet.window.key.RETURN
+    return symbol in [pyglet.window.key.RETURN, pyglet.window.key.SPACE]
