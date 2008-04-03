@@ -15,16 +15,9 @@ class World(pyglet.window.Window):
         self.audio = audio.Audio()
         self._set_icons()
         self._scene = None
-
-        if config.DEBUG:
-            self.change_scene(game.Game(self))
-        else:
-            #import title
-            #self.change_scene(title.Title(self))
-            self.change_scene(presents.Presents(self))
-
-        self._init_window_size()
         self.enable_alpha_blending()
+        self._init_window_size()
+
 
         if config.DEBUG:
             self.fps = pyglet.clock.ClockDisplay()
@@ -38,6 +31,13 @@ class World(pyglet.window.Window):
             self.set_fullscreen()
 
         pyglet.clock.schedule_interval(self.update, 1/60.0)
+
+        if config.DEBUG:
+            self.change_scene(game.Game(self))
+        else:
+            #import title
+            #self.change_scene(title.Title(self))
+            self.change_scene(presents.Presents(self))
 
     def run(self):
         pyglet.app.run()

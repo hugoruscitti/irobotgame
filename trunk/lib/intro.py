@@ -38,6 +38,10 @@ class SubScene:
         self.father = father
         self.layer = common.load_image('layer.png')
 
+    def stop_all(self):
+        for s in self.sprites:
+            s.stop()
+
 class SubScene1(SubScene):
 
     def __init__(self, father):
@@ -71,6 +75,7 @@ class SubScene1(SubScene):
         self.sprites[-1].draw()
 
     def next(self):
+        self.stop_all()
         self.father.change_subscene(SubScene2(self.father))
 
 
@@ -109,6 +114,7 @@ class SubScene2(SubScene):
         self.layer.blit(0, 0)
 
     def next(self):
+        self.stop_all()
         self.father.change_subscene(SubScene3(self.father))
 
 
@@ -145,5 +151,6 @@ class SubScene3(SubScene):
         self.layer.blit(0, 0)
 
     def next(self):
+        self.stop_all()
         world = self.father.world
         world.change_scene(title.Title(world))
