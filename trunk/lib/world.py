@@ -34,6 +34,9 @@ class World(pyglet.window.Window):
         if config.MOVE_WINDOW:
             self.set_location(400, 400)
 
+        if config.FULLSCREEN:
+            self.set_fullscreen()
+
         pyglet.clock.schedule_interval(self.update, 1/60.0)
 
     def run(self):

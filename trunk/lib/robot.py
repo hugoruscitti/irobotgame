@@ -16,7 +16,7 @@ class Dancing(State):
 
     def __init__(self, robot):
         State.__init__(self, robot)
-        self.animation = [5, 51, 5, 52, 5]
+        self.animation = [5, 51, 5, 52]
         self.step = 0
 
     def update(self, dt):
@@ -58,6 +58,8 @@ class Motion(State):
 class Robot(ActionSprite):
 
     def __init__(self, x, y, scale, pos):
+        # la posición indicada con un número como en el teclado numérico.
+        self.pos = pos
         self._load_images()
         ActionSprite.__init__(self, self._imgs[5])
         self.x = x
@@ -67,28 +69,34 @@ class Robot(ActionSprite):
         self._restart()
         self.change_state(Dancing(self))
         self.dancing = True
-        # la posición indicada con un número como en el teclado numérico.
-        self.pos = pos
+
+    def _load(self, index):
+        if self.pos in [7, 9]:
+            path = 'back_robot'
+        else:
+            path = 'robot'
+
+        return common.load_image('%s/%d.png' %(path, index))
+
 
     def _load_images(self):
         # TODO: Re-utilizar la clase Player (o hacer una superclase sobre ambas)
         self._imgs = {
-                0: common.load_image('robot/0.png'),
-                1: common.load_image('robot/1.png'),
-                2: common.load_image('robot/2.png'),
-                3: common.load_image('robot/3.png'),
-                4: common.load_image('robot/4.png'),
-                5: common.load_image('robot/5.png'),
-                51: common.load_image('robot/51.png'),
-                52: common.load_image('robot/52.png'),
-                6: common.load_image('robot/6.png'),
-                7: common.load_image('robot/7.png'),
-                8: common.load_image('robot/8.png'),
-                9: common.load_image('robot/9.png'),
-                10: common.load_image('robot/10.png'),
-                30: common.load_image('robot/30.png'),
-                70: common.load_image('robot/70.png'),
-                90: common.load_image('robot/90.png'),
+                1: self._load(1),
+                2: self._load(2),
+                3: self._load(3),
+                4: self._load(4),
+                5: self._load(5),
+                51: self._load(51),
+                52: self._load(52),
+                6: self._load(6),
+                7: self._load(7),
+                8: self._load(8),
+                9: self._load(9),
+                10: self._load(10),
+                30: self._load(30),
+                70: self._load(70),
+                90: self._load(90),
                 }
 
     def set_image(self, index):

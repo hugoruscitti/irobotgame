@@ -95,3 +95,7 @@ class Game(Scene):
 
     def create_drop(self, x, y):
         self.sprites.append(effects.Drop(x, y))
+
+    def on_player_stop_motion(self):
+        self.group.do_dancing()
+

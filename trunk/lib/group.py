@@ -35,5 +35,12 @@ class Group:
         if not dancing_robots:
             print "Eh, esto no debe ocurrir. No se puede detener robots si ninguno está bailando."
 
-        first_robot = dancing_robots[0]
-        first_robot.set_angry()
+        if dancing_robots:
+            first_robot = dancing_robots[0]
+            first_robot.set_angry()
+
+    def do_dancing(self):
+        robots = self.get_robot_dancing()
+
+        for r in robots:
+            r.change_state(robot.Dancing(r))
