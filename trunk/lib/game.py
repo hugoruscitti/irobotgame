@@ -11,6 +11,19 @@ import level
 import effects
 import group
 import title
+import lights
+
+
+class State:
+
+    def __init__(self, game):
+        self.game = game
+
+class Starting(State):
+
+    def __init__(self, game):
+        pass
+
 
 class Game(Scene):
     "Escena de juego donde los personajes están en el escenario."
@@ -22,6 +35,8 @@ class Game(Scene):
         self._layer = common.load_image('game_layer.png')
 
         self.sprites = []
+        self.lights = []
+        self._create_light()
 
         self.player = player.Player(100, 80, self)
         self.mouse = mouse.Mouse(self.player, self)
@@ -35,6 +50,13 @@ class Game(Scene):
         self.actual_move = 0
 
         self.world.audio.play_music('game')
+
+    def _create_light(self):
+        sprite = lights.LightCircle()
+        self.lights.append(sprite)
+
+        self.light = lights.Light()
+        self.sprites.append(self.light)
 
     def on_update_level(self, dt):
         self.level.update()
@@ -60,11 +82,16 @@ class Game(Scene):
 
                 # Si falla hace que se enoje uno de los robots
                 if fail:
+                    self.world.audio.play('stop')
                     self.group.stop_dancing_one_robot()
 
     def on_draw(self):
         self._background.blit(0, 0)
         self._layer.blit(0, 0)
+
+        for light in self.lights:
+            light.draw()
+
         self.group.draw()
         self.player.draw()
         self.mouse.draw()
@@ -79,9 +106,13 @@ class Game(Scene):
         self.mouse.update(dt)
         self.player.update(dt)
         self.group.update(dt)
+        self.light.update(dt)
 
         for sprite in self.level.sprites:
             sprite.update(dt)
+
+        for light in self.lights:
+            light.update(dt)
 
         self.level.clear_old_sprites()
 

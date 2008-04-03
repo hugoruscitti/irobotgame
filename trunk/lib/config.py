@@ -1,4 +1,4 @@
-DEBUG = False
+DEBUG = True
 MOVE_WINDOW = False
 AUDIO = True
 SHOW_MOUSE = False
