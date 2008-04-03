@@ -48,13 +48,14 @@ class World(pyglet.window.Window):
         images = [common.load_image(name) for name in names]
         self.set_icon(*images)
 
-    def change_scene(self, scene):
+    def change_scene(self, scene, now=False):
         if self._scene:
             self.pop_handlers()
             self._scene.destroy()
 
         self._scene = scene
-        self.push_handlers(scene)
+        self.push_handlers(self._scene)
+
 
     def on_draw(self):
         if config.DEBUG:
