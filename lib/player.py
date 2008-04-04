@@ -45,13 +45,29 @@ class Dancing(State):
 
     def __init__(self, player):
         State.__init__(self, player)
-        self.animation = [5, 51, 52, 51]
+        self.animation = [51, 52, 51, 5]
         self.step = 0
 
     def update(self, dt):
         self.step += dt * 5
         frame = self.animation[int(self.step) % len(self.animation)]
         self.player.set_image(frame)
+
+class Losing(State):
+    "Perdió y todos los robots están enojadas, o sea fuiste..."
+
+    def __init__(self, player):
+        State.__init__(self, player)
+        # TODO: sacar este hack de [0]* 30, pasa que la animación es cíclica y
+        # yo quiero que no lo sea (en este caso...)
+        self.animation = [5, 51, 52, 51] + [0]*30
+        self.step = 0
+
+    def update(self, dt):
+        self.step += dt * 5
+        frame = self.animation[int(self.step) % len(self.animation)]
+        self.player.set_image(frame)
+
 
 class Motion(State):
     "Realiza un movimiento de baile."

@@ -41,3 +41,10 @@ class Message(AbstractText):
     def __init__(self, text):
         self.text = text
         self.label = pyglet.text.Label('', font_size=30, x=320, y=240, dpi=96)
+
+
+class GameMessage(AbstractText):
+    "Texto que se muestra mientras transcurre el juego."
+
+    def __init__(self, text):
+        self.text = te

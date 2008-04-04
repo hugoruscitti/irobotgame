@@ -48,6 +48,22 @@ class Starting(State):
             pass
 
 
+class Losing(State):
+
+    def __init__(self, game):
+        State.__init__(self, game)
+        game.world.audio.stop_music()
+        game.player.change_state(player.Losing(self.game.player))
+        pyglet.clock.unschedule(game.on_update_level)
+
+    def update(self, dt):
+        self.step += dt
+        self.game.player.update(dt)
+
+        if self.step > 4:
+            print "asdasdasd"
+            print "SALTA DE ESCENA"
+
 class Game(Scene):
     "Escena de juego donde los personajes están en el escenario."
 
@@ -110,7 +126,10 @@ class Game(Scene):
                 # Si falla hace que se enoje uno de los robots
                 if fail:
                     self.world.audio.play('stop')
-                    self.group.stop_dancing_one_robot()
+                    all_robot_are_angry = self.group.stop_dancing_one_robot()
+
+                    if all_robot_are_angry:
+                        self.change_state(Losing(self))
 
     def on_draw(self):
         self._background.blit(0, 0)
@@ -133,10 +152,10 @@ class Game(Scene):
             motion.draw()
 
     def update(self, dt):
+        self.mouse.update(dt)
         self._state.update(dt)
 
     def update_all_objects(self, dt):
-        self.mouse.update(dt)
         self.player.update(dt)
         self.group.update(dt)
 
@@ -162,6 +181,8 @@ class Game(Scene):
         if common.is_cancel_key(symbol):
             pyglet.clock.unschedule(self.on_update_level)
             self.world.change_scene(title.Title(self.world))
+        elif symbol == pyglet.window.key.F5:
+            self.world.change_scene(Game(self.world))
 
     def on_mouse_drag(self, x, y, dx, dy, button, extra):
         self.mouse.on_mouse_motion(x, y, dx, dy)
