@@ -28,6 +28,7 @@ class Playing(State):
         self.game.world.audio.play('go')
         self.game.world.audio.play_music('game')
         self.game.create_lights()
+        pyglet.clock.schedule_interval(self.game.on_update_level, 0.5)
 
     def update(self, dt):
         self.game.update_all_objects(dt)
@@ -65,7 +66,6 @@ class Game(Scene):
         self.group = group.Group()
         self.level = level.Level(self.group)
 
-        #pyglet.clock.schedule_interval(self.on_update_level, 0.5)
 
         # TODO: Crear un módulo nuevo para esta verificación
         self.actual_move = 0
