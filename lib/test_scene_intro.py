@@ -30,6 +30,7 @@ window = pyglet.window.Window()
 @window.event
 def on_draw():
     ima_background.blit(0, 0)
+
     for s in sprites:
         s.draw()
 

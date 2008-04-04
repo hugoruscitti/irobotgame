@@ -2,6 +2,7 @@
 import pyglet
 
 BLACK = (0, 0, 0, 255)
+WHITE = (255, 255, 255, 255)
 
 
 class AbstractText:
@@ -35,16 +36,21 @@ class History(AbstractText):
         pyglet.clock.schedule_interval(self._update, 0.01)
 
 
-class Message(AbstractText):
+class BigMessage(AbstractText):
     "Un texto en el centro de la pantalla con algún mensaje rápido."
 
-    def __init__(self, text):
+    def __init__(self, text, x=320):
         self.text = text
-        self.label = pyglet.text.Label('', font_size=30, x=320, y=240, dpi=96)
+        self.label = pyglet.text.Label('', font_size=40, x=x, y=240, dpi=96)
+        pyglet.clock.schedule_interval(self._update, 0.01)
 
 
 class GameMessage(AbstractText):
     "Texto que se muestra mientras transcurre el juego."
 
     def __init__(self, text):
-        self.text = te
+        self.label = pyglet.text.Label('', font_size=30, x=x, y=240, dpi=96)
+        self.set_text(text)
+
+    def set_text(self, text):
+        self.label.text = text

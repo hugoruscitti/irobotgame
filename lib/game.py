@@ -12,6 +12,7 @@ import effects
 import group
 import title
 import lights
+import post_game_scenes
 
 
 class State:
@@ -60,9 +61,9 @@ class Losing(State):
         self.step += dt
         self.game.player.update(dt)
 
-        if self.step > 4:
-            print "asdasdasd"
-            print "SALTA DE ESCENA"
+        if self.step > 2.5:
+            new_scene = post_game_scenes.GameOver(self.game.world)
+            self.game.world.change_scene(new_scene)
 
 class Game(Scene):
     "Escena de juego donde los personajes están en el escenario."
@@ -102,7 +103,10 @@ class Game(Scene):
         self.lower_ligths.append(sprite)
 
     def on_update_level(self, dt):
-        self.level.update()
+        done = self.level.update()
+
+        if done:
+            self.game.change_state(LevelDone(self.game))
 
     def set_state(self, code):
         motions = self.level.get_motions_by_code(code)
