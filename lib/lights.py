@@ -2,6 +2,9 @@ import math
 from cocos.actions import *
 import common
 
+
+CENTER_Y = 160
+
 class LightCircle(ActionSprite):
 
     def __init__(self):
@@ -9,7 +12,7 @@ class LightCircle(ActionSprite):
         image.anchor_x = image.width / 2
         ActionSprite.__init__(self, image)
         self.center_x = 220
-        self.center_y = 120
+        self.center_y = CENTER_Y
         self.step = 0
 
     def update(self, dt):
@@ -25,7 +28,7 @@ class Light(ActionSprite):
         image.anchor_y = image.height
         ActionSprite.__init__(self, image)
         self.x = 220
-        self.y = 500
+        self.y = 380 + CENTER_Y
         self.step = 0
 
     def update(self, dt):

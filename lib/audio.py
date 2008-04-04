@@ -29,6 +29,10 @@ class Audio:
                 self.music_game.pause()
                 self.music_intro.play()
 
+    def stop_music(self):
+        self.music_intro.pause()
+        self.music_game.pause()
+
     def _load_sounds(self):
         self.sound = pyglet.media.Player()
         self.sounds = {
@@ -38,6 +42,8 @@ class Audio:
                 's3': common.load_sound('sounds/s3.wav'),
                 's4': common.load_sound('sounds/s4.wav'),
                 'stop': common.load_sound('sounds/stop.wav'),
+                'ready': common.load_sound('sounds/ready.wav'),
+                'go': common.load_sound('sounds/go.wav'),
                 }
 
     def update(self):
