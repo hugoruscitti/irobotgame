@@ -97,8 +97,10 @@ class Title(Scene):
 
     def on_draw(self):
         self.background.blit(0, 0)
+
         for s in self.sprites:
             s.draw()
+
         self.text.draw()
 
     def on_mouse_press(self, x, y, bottom, extra=None):
