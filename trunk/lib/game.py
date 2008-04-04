@@ -18,11 +18,33 @@ class State:
 
     def __init__(self, game):
         self.game = game
+        self.step = 0.0
+
+
+class Playing(State):
+
+    def __init__(self, game):
+        State.__init__(self, game)
+        self.game.world.audio.play('go')
+        self.game.world.audio.play_music('game')
+        self.game.create_lights()
+
+    def update(self, dt):
+        self.game.update_all_objects(dt)
 
 class Starting(State):
 
     def __init__(self, game):
-        pass
+        State.__init__(self, game)
+        game.world.audio.stop_music()
+        game.world.audio.play('ready')
+
+    def update(self, dt):
+        self.step += dt
+
+        if self.step > 2.5:
+            self.game.change_state(Playing(self.game))
+            pass
 
 
 class Game(Scene):
@@ -30,13 +52,12 @@ class Game(Scene):
 
     def __init__(self, world):
         Scene.__init__(self, world)
-
-        self._background = common.load_image('game_background.png')
-        self._layer = common.load_image('game_layer.png')
+        self._load_images()
 
         self.sprites = []
-        self.lights = []
-        self._create_light()
+        self.upper_lights = []
+        self.lower_ligths = []
+        #self._create_light()
 
         self.player = player.Player(100, 80, self)
         self.mouse = mouse.Mouse(self.player, self)
@@ -44,19 +65,25 @@ class Game(Scene):
         self.group = group.Group()
         self.level = level.Level(self.group)
 
-        pyglet.clock.schedule_interval(self.on_update_level, 0.5)
+        #pyglet.clock.schedule_interval(self.on_update_level, 0.5)
 
         # TODO: Crear un módulo nuevo para esta verificación
         self.actual_move = 0
+        self.change_state(Starting(self))
 
-        self.world.audio.play_music('game')
+    def change_state(self, state):
+        self._state = state
 
-    def _create_light(self):
+    def _load_images(self):
+        self._background = common.load_image('game_background.png')
+        self._layer = common.load_image('game_layer.png')
+
+    def create_lights(self):
+        sprite = lights.Light()
+        self.upper_lights.append(sprite)
+
         sprite = lights.LightCircle()
-        self.lights.append(sprite)
-
-        self.light = lights.Light()
-        self.sprites.append(self.light)
+        self.lower_ligths.append(sprite)
 
     def on_update_level(self, dt):
         self.level.update()
@@ -89,7 +116,7 @@ class Game(Scene):
         self._background.blit(0, 0)
         self._layer.blit(0, 0)
 
-        for light in self.lights:
+        for light in self.lower_ligths:
             light.draw()
 
         self.group.draw()
@@ -99,20 +126,28 @@ class Game(Scene):
         for sprite in self.sprites:
             sprite.draw()
 
+        for light in self.upper_lights:
+            light.draw()
+
         for motion in self.level.sprites:
             motion.draw()
 
     def update(self, dt):
+        self._state.update(dt)
+
+    def update_all_objects(self, dt):
         self.mouse.update(dt)
         self.player.update(dt)
         self.group.update(dt)
-        self.light.update(dt)
+
+        for sprite in self.upper_lights:
+            sprite.update(dt)
+
+        for sprite in self.lower_ligths:
+            sprite.update(dt)
 
         for sprite in self.level.sprites:
             sprite.update(dt)
-
-        for light in self.lights:
-            light.update(dt)
 
         self.level.clear_old_sprites()
 
@@ -127,7 +162,6 @@ class Game(Scene):
         if common.is_cancel_key(symbol):
             pyglet.clock.unschedule(self.on_update_level)
             self.world.change_scene(title.Title(self.world))
-            self.world.audio.play_music('intro')
 
     def on_mouse_drag(self, x, y, dx, dy, button, extra):
         self.mouse.on_mouse_motion(x, y, dx, dy)
@@ -137,4 +171,3 @@ class Game(Scene):
 
     def on_player_stop_motion(self):
         self.group.do_dancing()
-
