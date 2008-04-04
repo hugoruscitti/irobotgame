@@ -16,7 +16,7 @@ class Dancing(State):
 
     def __init__(self, robot):
         State.__init__(self, robot)
-        self.animation = [5, 51, 5, 52]
+        self.animation = [51, 5, 52, 5]
         self.step = 0
 
     def update(self, dt):
@@ -120,10 +120,8 @@ class Robot(ActionSprite):
         self.state.update(dt)
 
     def set_angry(self):
-        print "ANGRY!!!!!!!!!!!"
-
         if not self.dancing:
-            print "Ojo!, no está bailando y le indican set_angry"
+            print "Ojo!, no está bailando y le indican set_angry."
 
         self.dancing = False
         self.change_state(Angry(self))

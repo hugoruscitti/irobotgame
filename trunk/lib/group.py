@@ -30,6 +30,7 @@ class Group:
         return [x for x in self.robots if x.dancing]
 
     def stop_dancing_one_robot(self):
+        "Retorna True si todos los robots dejan de bailar."
         dancing_robots = self.get_robot_dancing()
 
         if not dancing_robots:
@@ -38,6 +39,9 @@ class Group:
         if dancing_robots:
             first_robot = dancing_robots[0]
             first_robot.set_angry()
+
+        if not self.get_robot_dancing():
+            return True
 
     def do_dancing(self):
         robots = self.get_robot_dancing()

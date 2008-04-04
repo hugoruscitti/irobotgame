@@ -1,4 +1,8 @@
+I Robot?
+========
 
+A robot dancing game development in 7 days for pyweek 6 (March 2008), a 
+python game programming challenge.
 
 Authors
 =======
@@ -8,7 +12,7 @@ Authors
     - Walter Velazquez <wgv_tattoo@yahoo.com.ar>
     - Javier Da Silva <javierdasilva21@hotmail.com>
 
-    there are a AUTHORS file too.
+        (there are a AUTHORS file too.)
 
 
 License
@@ -35,17 +39,13 @@ More info
 
 
 
-
 Some tips of the game
 =====================
 
   * Do you like the intro scene?, you can repeat'em pressing the "r" key
     in the title scene.
-
   * "F" key allow you to set a fullscreen window.
-
   * The "lib/config.py" file has some contrant to change the game behavior.
-
   * You boss is comming?, type 'q' and the game quit inmediatly ! ...
-
   * You has no money? neither i :)
+  * If you can't play good, don't worry. type F5 to restart the game quickly.

@@ -49,6 +49,10 @@ class Audio:
     def update(self):
         if config.AUDIO:
             pyglet.media.dispatch_events()
+            if self.music_game.playing:
+                self.music_game.dispatch_events()
+            elif self.music_intro.playing:
+                self.music_intro.dispatch_events()
 
     def play(self, name):
         if config.AUDIO:
