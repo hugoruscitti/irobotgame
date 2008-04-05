@@ -35,7 +35,8 @@ class Mouse:
             self.background.blit(CENTER_X, CENTER_Y)
             self.circle.blit(CENTER_X, CENTER_Y)
             self.cursor.blit(self.x, self.y)
-        
+
+    def post_draw(self):
         if config.SHOW_PAD:
             # TODO: Pasar los valores a constantes
             #       512 es el centro del cículo de pad

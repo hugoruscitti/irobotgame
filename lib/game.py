@@ -174,6 +174,8 @@ class Game(Scene):
         for motion in self.level.sprites:
             motion.draw()
 
+        self.mouse.post_draw()
+
         self.message.draw()
 
     def update(self, dt):
