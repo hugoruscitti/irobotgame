@@ -15,8 +15,9 @@ MSG_REGULAR = 'Well, but you can improve...'
 
 class GameOver(Scene):
 
-    def __init__(self, world):
+    def __init__(self, world, game):
         Scene.__init__(self, world)
+        self.game = game
         self.step = 0
         self._load_images()
         self.are_showing_message = False
@@ -50,8 +51,11 @@ class GameOver(Scene):
     def _create_game_over_text(self, dt):
         message_1 = text.BigMessage("Game Over", x=155)
         message_2 = text.Text(MSG_START, 160, 10, color=text.WHITE)
+        score = self.game.get_score()
+        message_3 = text.Score("Your score is: %d" %(score))
         self.texts.append(message_1)
         self.texts.append(message_2)
+        self.texts.append(message_3)
 
     def update(self, dt):
         pass
@@ -70,11 +74,16 @@ class GameOver(Scene):
             pyglet.clock.unschedule(self._create_game_over_text)
             self.world.change_scene(title.Title(self.world))
 
+    def on_mouse_press(self, x, y, bottom, extra=None):
+        pyglet.clock.unschedule(self._create_game_over_text)
+        self.world.change_scene(title.Title(self.world))
+
 
 class Final(Scene):
 
-    def __init__(self, world):
+    def __init__(self, world, game):
         Scene.__init__(self, world)
+        self.game = game
         self.step = 0
         self._create_sprites()
         self.text = text.History("Good bye robot city...")
@@ -83,7 +92,10 @@ class Final(Scene):
 
     def _create_text(self, dt):
         message = text.Text(MSG_START, 150, 10, color=text.WHITE)
+        score = self.game.get_score()
+        message_1 = text.Score("Your score is: %d" %(score))
         self.texts.append(message)
+        self.texts.append(message_1)
 
     def update(self, dt):
         self.step += dt
@@ -136,11 +148,15 @@ class Final(Scene):
             pyglet.clock.unschedule(self._create_text)
             self.world.change_scene(title.Title(self.world))
 
+    def on_mouse_press(self, x, y, bottom, extra=None):
+        pyglet.clock.unschedule(self._create_text)
+        self.world.change_scene(title.Title(self.world))
 
 class Regular(Scene):
 
-    def __init__(self, world):
+    def __init__(self, world, game):
         Scene.__init__(self, world)
+        self.game = game
         self._create_sprites()
         self._create_history()
         pyglet.clock.schedule_once(self._create_text, 3)
@@ -200,10 +216,17 @@ class Regular(Scene):
             pyglet.clock.unschedule(self._create_text)
             self.world.change_scene(title.Title(self.world))
 
+    def on_mouse_press(self, x, y, bottom, extra=None):
+        pyglet.clock.unschedule(self._create_text)
+        self.world.change_scene(title.Title(self.world))
+
     def _create_history(self):
         message = text.History(MSG_REGULAR)
         self.sprites_front.append(message)
     
     def _create_text(self, dt):
         message = text.Text(MSG_START, 150, 10, color=text.WHITE)
+        score = self.game.get_score()
+        message_1 = text.Score("Your score is: %d" %(score))
         self.sprites_front.append(message)
+        self.sprites_front.append(message_1)

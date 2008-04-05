@@ -65,7 +65,7 @@ class Losing(State):
         self.game.player.update(dt)
 
         if self.step > 2.5:
-            new_scene = post_game_scenes.GameOver(self.game.world)
+            new_scene = post_game_scenes.GameOver(self.game.world, self.game)
             self.game.world.change_scene(new_scene)
 
 
@@ -81,13 +81,13 @@ class Ending(State):
             score = self.game.group.get_score()
 
             if score == 4:
-                new_scene = post_game_scenes.Final(self.game.world)
+                new_scene = post_game_scenes.Final(self.game.world, self.game)
                 self.game.world.change_scene(new_scene)
             elif score == 3:
-                new_scene = post_game_scenes.Regular(self.game.world)
+                new_scene = post_game_scenes.Regular(self.game.world, self.game)
                 self.game.world.change_scene(new_scene)
             else:
-                new_scene = post_game_scenes.GameOver(self.game.world)
+                new_scene = post_game_scenes.GameOver(self.game.world, self.game)
                 self.game.world.change_scene(new_scene)
 
 
@@ -118,6 +118,7 @@ class Game(Scene):
         self.message = text.GameMessage()
         self.change_state(Starting(self))
         self.fails = 0
+        self.arrows_selected = 0
 
     def change_state(self, state):
         self._state = state
@@ -180,6 +181,7 @@ class Game(Scene):
                     if all_robot_are_angry:
                         self.change_state(Losing(self))
                 else:
+                    self.arrows_selected += 1
                     self.good_moves_combo += 1
 
                     if self.good_moves_combo > 3:
@@ -258,3 +260,6 @@ class Game(Scene):
     def add_fail(self):
         self.fails += 1
         self.message.set_text("Fails: %d" %(self.fails))
+
+    def get_score(self):
+        return self.arrows_selected + 1

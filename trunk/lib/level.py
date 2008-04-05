@@ -46,6 +46,7 @@ class Level:
 
         self.moves = lines[1].rstrip()
         self.timeline = lines[2].rstrip()
+        self.moves_count = int(self.moves.replace(" ", ""))
 
         if len(self.moves) != len(self.timeline):
             #TODO: lanzar una excepción, tal vez...

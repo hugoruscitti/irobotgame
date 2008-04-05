@@ -56,3 +56,13 @@ class GameMessage(AbstractText):
 
     def set_text(self, text):
         self.label.text = text
+
+class Score(AbstractText):
+    "Un texto para las escenas de pantalla pequeña"
+
+    def __init__(self, text):
+        self.text = text
+        self.label = pyglet.text.Label('', font_size=18, x=100, y=40, dpi=96)
+        pyglet.clock.schedule_interval(self._update, 0.01)
+
+

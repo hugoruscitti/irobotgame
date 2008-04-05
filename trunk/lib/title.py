@@ -114,4 +114,7 @@ class Title(Scene):
             self.world.change_scene(game.Game(self.world))
         elif symbol == pyglet.window.key.R:
             self.world.change_scene(presents.Presents(self.world))
+        elif symbol == pyglet.window.key.ESCAPE:
+            self.world.change_scene(about.About(self.world))
+            print "Asdasdasd"
 
