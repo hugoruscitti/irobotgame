@@ -25,7 +25,7 @@ class Level:
         if item:
             move_id, delay = item
             self.group.do_move(move_id, delay)
-            self.sprites.append(motion.Motion(move_id, delay))
+            self.sprites.append(motion.Motion(move_id, delay, self))
 
     def _advance(self):
         self.step += 1
@@ -64,3 +64,6 @@ class Level:
     def are_empty(self):
         with_live = [x for x in self.sprites if x.are_active]
         return len(with_live) == 0
+
+    def on_motion_lost(self):
+        self.game.on_motion_lost()
