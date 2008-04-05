@@ -41,8 +41,10 @@ class World(pyglet.window.Window):
             #import post_game_scenes
             #self.change_scene(post_game_scenes.GameOver(self))
             #import presents
-            import post_game_scenes
-            self.change_scene(post_game_scenes.Regular(self))
+            #import post_game_scenes
+            #self.change_scene(post_game_scenes.Regular(self))
+            import presents
+            self.change_scene(presents.Presents(self))
 
     def run(self):
         pyglet.app.run()

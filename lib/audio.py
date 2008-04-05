@@ -61,6 +61,7 @@ class Audio:
             #self.sound.play()
 
     def play_correct_move(self):
-        list = ['s1', 's2', 's3', 's4']
+        #list = ['s1', 's2', 's3', 's4']
+        list = ['s4']
         item = random.choice(list)
         self.sounds[item].play()

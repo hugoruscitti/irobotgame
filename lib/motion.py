@@ -9,7 +9,7 @@ class Motion(ActionSprite):
     def __init__(self, motion, delay):
         self._load_images(motion)
         ActionSprite.__init__(self, self.img)
-        self.x = 520
+        self.x = 515
         self.y = 160
         self.opacity = 0
         self.motion = int(motion)

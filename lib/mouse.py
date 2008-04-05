@@ -6,7 +6,6 @@ import math
 CENTER_X = 420
 CENTER_Y = 200
 SCALE_TO_REDUCE = 30.0
-FORCE = 3
 
 
 class Mouse:
@@ -68,8 +67,8 @@ class Mouse:
     def on_mouse_motion(self, x, y, dx, dy):
         # NOTE: esto es una refactorización de "test_mouse.py"
         # NOTE: 'x' e 'y' no se usan, si se usa 'self.x', 'self.y' ...
-        self.x += dx * FORCE
-        self.y += dy * FORCE
+        self.x += dx * config.VALUE_MOUSE_MOVE
+        self.y += dy * config.VALUE_MOUSE_MOVE
 
         # catetos
         op = self.y - CENTER_Y
@@ -127,9 +126,9 @@ class Mouse:
                 pass
 
     def _mouse_move_to_center(self):
-        self.x += (CENTER_X - self.x) / SCALE_TO_REDUCE 
-        self.y += (CENTER_Y - self.y) / SCALE_TO_REDUCE
-        pass
+        if config.RESTORE_MOUSE:
+            self.x += (CENTER_X - self.x) / SCALE_TO_REDUCE 
+            self.y += (CENTER_Y - self.y) / SCALE_TO_REDUCE
 
     def update(self, dt):
         self._mouse_move_to_center()

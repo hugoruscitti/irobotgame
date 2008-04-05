@@ -125,3 +125,7 @@ class Robot(ActionSprite):
 
         self.dancing = False
         self.change_state(Angry(self))
+
+    def unset_angry(self):
+        self.dancing = True
+        self.change_state(Dancing(self))
