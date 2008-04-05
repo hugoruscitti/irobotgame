@@ -117,6 +117,7 @@ class Game(Scene):
         self.actual_move = 0
         self.message = text.GameMessage()
         self.change_state(Starting(self))
+        self.fails = 0
 
     def change_state(self, state):
         self._state = state
@@ -142,6 +143,7 @@ class Game(Scene):
 
     def on_motion_lost(self):
         all_robot_are_angry = self.group.stop_dancing_one_robot()
+        self.add_fail()
         self.good_moves_combo = 0
         self.world.audio.play('stop')
 
@@ -173,6 +175,7 @@ class Game(Scene):
                     self.good_moves_combo = 0
                     self.world.audio.play('stop')
                     all_robot_are_angry = self.group.stop_dancing_one_robot()
+                    self.add_fail()
 
                     if all_robot_are_angry:
                         self.change_state(Losing(self))
@@ -251,3 +254,7 @@ class Game(Scene):
 
     def on_player_stop_motion(self):
         self.group.do_dancing()
+
+    def add_fail(self):
+        self.fails += 1
+        self.message.set_text("Fails: %d" %(self.fails))
