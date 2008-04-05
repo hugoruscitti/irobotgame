@@ -68,3 +68,61 @@ class GameOver(Scene):
         if common.is_continue_key(symbol) or common.is_cancel_key(symbol):
             pyglet.clock.unschedule(self._create_game_over_text)
             self.world.change_scene(title.Title(self.world))
+
+
+class Final(Scene):
+
+    def __init__(self, world):
+        Scene.__init__(self, world)
+        self.step = 0
+        self._create_sprites()
+        self._create_texts()
+
+    def _create_texts(self):
+        pass
+
+    def update(self, dt):
+        self.step += dt
+
+    def _create_sprites(self):
+        ima_background = common.load_image('intro/sky3.png')
+        layer = common.load_image('layer.png')
+
+        sky = ActionSprite(ima_background)
+        sky.y = 118
+        sky.x = 100
+        sky.do(Move((0, -5), 6))
+
+
+        image = common.load_image('intro/castle.png')
+        image.anchor_x = image.width / 2
+        castle = ActionSprite(image)
+        castle.x = 320
+        castle.y = 100
+        castle.do(Move((0, -10), 4) | Scale(0.97, 4))
+
+        ima = common.load_image('intro/tree.png')
+        ima.anchor_x = image.width / 2
+        intro_1 = ActionSprite(ima)
+        intro_1.x = 95 + image.width / 2
+        intro_1.y = 80
+        intro_1.do(Move((0, 20), 4) | Scale(1.1, 4))
+
+        player = ActionSprite(common.load_image('intro/player.png'))
+        player.x = 400
+        player.y = 90
+
+        player.do(Jump(5, 40, 5, 4))
+
+        self.sprites = [sky, castle, intro_1, player]
+        self.front = []
+        self.layer = layer
+
+    def on_draw(self):
+        for s in self.sprites:
+            s.draw()
+
+        self.layer.blit(0, 0)
+
+        for s in self.front:
+            s.draw()
