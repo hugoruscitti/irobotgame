@@ -19,6 +19,9 @@ class Presents(Scene):
         self.step = 0.0
         self.text = text.Text(MSG_FULLSCREEN, 180, 10)
 
+    def init(self):
+        pass
+
     def _create_sprites(self):
         images = [
                 common.load_image('presents/frame_1.png'),

@@ -120,6 +120,9 @@ class Game(Scene):
         self.fails = 0
         self.arrows_selected = 0
 
+    def init(self):
+        pass
+
     def change_state(self, state):
         self._state = state
 

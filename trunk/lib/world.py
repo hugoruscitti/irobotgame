@@ -12,8 +12,9 @@ import presents
 
 class World(pyglet.window.Window):
 
-    def __init__(self):
-        pyglet.window.Window.__init__(self, caption='I Robot ?', resizable=True) 
+    def __init__(self, start_scene=True):
+        pyglet.window.Window.__init__(self, caption='I Robot ?', 
+                resizable=True, vsync=config.VSYNC)
         self.audio = audio.Audio()
         self._set_icons()
         self._scene = None
@@ -32,20 +33,15 @@ class World(pyglet.window.Window):
             self.set_fullscreen()
 
         pyglet.clock.schedule_interval(self.update, 1/60.0)
+        self._new_scene = None
 
-        if config.DEBUG:
-            import about
-            self.change_scene(about.About(self))
-        else:
-            #import title
-            #self.change_scene(title.Title(self))
-            #import post_game_scenes
-            #self.change_scene(post_game_scenes.GameOver(self))
-            #import presents
-            #import post_game_scenes
-            #self.change_scene(post_game_scenes.Regular(self))
-            import presents
-            self.change_scene(presents.Presents(self))
+        if start_scene:
+            if config.DEBUG:
+                import about
+                self.change_scene(about.About(self))
+            else:
+                import presents
+                self.change_scene(presents.Presents(self))
 
     def run(self):
         pyglet.app.run()
@@ -56,14 +52,17 @@ class World(pyglet.window.Window):
         images = [common.load_image(name) for name in names]
         self.set_icon(*images)
 
-    def change_scene(self, scene, now=False):
+    def change_scene(self, scene):
+        self._new_scene = scene
+
+    def _do_change_scene(self):
         if self._scene:
             self.pop_handlers()
             self._scene.destroy()
 
-        self._scene = scene
+        self._scene = self._new_scene
         self.push_handlers(self._scene)
-
+        self._new_scene = None
 
     def on_draw(self):
         if config.DEBUG:
@@ -71,6 +70,11 @@ class World(pyglet.window.Window):
 
     def update(self, dt):
         self.audio.update()
+
+        if self._new_scene:
+            self._do_change_scene()
+            self._scene.init()
+
         self._scene.update(dt)
 
     def on_key_press(self, symbol, extra):
@@ -81,6 +85,10 @@ class World(pyglet.window.Window):
             # The boss key handler
             # o como decimos en el barrio: pa' que el jefe no te descubra jugando...
             sys.exit(0)
+        elif symbol == pyglet.window.key.S:
+            from about import About as Scene
+            new_scene = Scene(self)
+            self.change_scene(new_scene)
 
 
     def capture_mouse(self):

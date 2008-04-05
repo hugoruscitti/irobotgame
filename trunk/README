@@ -49,3 +49,34 @@ Some tips of the game
   * You boss is comming?, type 'q' and the game quit inmediatly ! ...
   * You has no money? neither i :)
   * If you can't play good, don't worry. type F5 to restart the game quickly.
+
+Installation
+============
+
+Linux:
+
+  It is necesary to follow this steps:
+
+    wget http://pyglet.googlecode.com/files/pyglet-1.1alpha2.tar.gz
+    tar xzf pyglet-1.1alpha2.tar.gz
+    cd pyglet-1.1alpha2
+    sudo python setup.py install
+
+  then download the game and run:
+    
+    python run_game.py
+
+
+
+Windows:
+  Download and install Python 2.4 or 2.5 from:
+    http://www.python.org
+  
+  Download and install Pyglet development release (1.1alpha2) from:
+    http://www.pyglet.org 
+  
+  Download Avbin from:
+    http://code.google.com/p/avbin
+  And extract it to System32 folder
+   
+  Double click in run_game.py and enjoy!

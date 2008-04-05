@@ -235,7 +235,10 @@ class ActionSprite( pyglet.sprite.Sprite ):
                 The time that elapsed since that last time this functions was called.
         """
         for x in self.to_remove:
-            self.actions.remove( x )
+            try:
+                self.actions.remove( x )
+            except ValueError:
+                pass
         self.to_remove = []
 
         if len( self.actions ) == 0:

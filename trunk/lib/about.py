@@ -10,6 +10,22 @@ import random
 import common
 
 
+def show_name(action, (name, text)):
+    persons = {
+        'hugoruscitti': ('Hugo Ruscitti', 'Programming', 320, 330),
+        'cristian': ('Cristian Villalba', 'Programming and musics', 290, 230),
+        'walter': ('Walter Velazquez', 'Art', 320, 350),
+        'javi': ('Javier Da Silva', 'Art', 280, 340),
+        }
+
+    fullname, task, x, y = persons[name]
+    text.set_text(fullname, task)
+    text.set_position(x, y)
+
+
+def hide_text(action, text):
+    text.set_text('', '')
+
 class About(Scene):
     
     def __init__(self, world):
@@ -17,15 +33,16 @@ class About(Scene):
         self.step = 0
         self._load_background()
         self.name = text.AboutText()
-        self.show_name = {
-                'hugoruscitti': self.show_hugoruscitti,
-                'cristian': self.show_cristian,
-                'walter': self.show_walter,
-                'javi': self.show_javi,
-                }
         self._create_sprites()
 
         pyglet.clock.schedule_once(self.show_losersjuegos_logo, 4 + 3 * 2)
+
+    def init(self):
+        for index, name in enumerate(self.names):
+            #time = 0.5 + index * 2 + 1
+            #pyglet.clock.schedule_once(self.show_name[name], time)
+            #pyglet.clock.schedule_once(self.hide_text, time + 1)
+            pass
 
     def show_losersjuegos_logo(self, dt):
         images = [
@@ -44,22 +61,6 @@ class About(Scene):
         self.name.set_text('Thanks !', 'http://www.losersjuegos.com.ar')
         self.name.set_position(180, 400)
 
-    def show_hugoruscitti(self, dt):
-        self.name.set_text('Hugo Ruscitti', 'Programming')
-        self.name.set_position(320, 330)
-
-    def show_cristian(self, dt):
-        self.name.set_text('Cristian Villalba', 'Programming and musics')
-        self.name.set_position(290, 230)
-
-    def show_walter(self, dt):
-        self.name.set_text('Walter Velazquez', 'Art')
-        self.name.set_position(320, 350)
-
-    def show_javi(self, dt):
-        self.name.set_text('Javier Da Silva', 'Art')
-        self.name.set_position(280, 340)
-
     def _load_background(self):
         images = [
                 common.load_image('about/1.png'),
@@ -75,8 +76,7 @@ class About(Scene):
         self.name.set_text('', '')
 
     def _create_sprites(self):
-        self.names = ['hugoruscitti', 'cristian', 'walter', 'javi']
-        random.shuffle(self.names)
+        self.names = ['hugoruscitti', 'walter', 'cristian', 'javi']
         self.sprites = []
 
         for index, name in enumerate(self.names):
@@ -86,11 +86,10 @@ class About(Scene):
             sprite.y = - image.height
             sprite.opacity = 0
             SPEED = 0.5
-            pyglet.clock.schedule_once(self.show_name[name], 1.5 + index * 2 + 1)
-            pyglet.clock.schedule_once(self.hide_text, 2.5 + index * 2 + 1)
             sprite.do(Delay(index * 2) + Delay(1) +  
                     (FadeIn(SPEED) | Move((0, image.height), SPEED)) +
-                    Delay(1) + 
+                    CallFuncS(show_name, (name, self.name)) + 
+                    Delay(1) + CallFuncS(hide_text, self.name) + 
                     (Scale(0.3, 1) | Move((350 - index * 70, 0), 1)))
 
             self.sprites.append(sprite)
@@ -98,6 +97,10 @@ class About(Scene):
 
     def update(self, dt):
         self.step += dt
+
+        if self.step > 17:
+            import sys
+            sys.exit(0)
 
     def on_draw(self):
         self.animation.draw()
@@ -118,3 +121,17 @@ class About(Scene):
             self._exit()
         elif symbol == pyglet.window.key.ESCAPE:
             self._exit()
+
+    def destroy(self):
+        self.animation.stop()
+
+        try:
+            self.logo.stop()
+        except AttributeError:
+            pass
+
+        for sprite in self.sprites:
+            sprite.stop()
+
+if __name__ == '__main__':
+    import test_about

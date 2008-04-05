@@ -13,6 +13,9 @@ class Intro(Scene):
         self.change_subscene(SubScene1(self))
         self.world.audio.play_music('intro')
 
+    def init(self):
+        pass
+
     def change_subscene(self, scene):
         self.sub_scene = scene
         self.step = 0
