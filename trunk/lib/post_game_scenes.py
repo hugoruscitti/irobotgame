@@ -76,10 +76,7 @@ class Final(Scene):
         Scene.__init__(self, world)
         self.step = 0
         self._create_sprites()
-        self._create_texts()
-
-    def _create_texts(self):
-        pass
+        self.text = text.History("Good bye robot city...")
 
     def update(self, dt):
         self.step += dt
@@ -92,7 +89,6 @@ class Final(Scene):
         sky.y = 118
         sky.x = 100
         sky.do(Move((0, -5), 6))
-
 
         image = common.load_image('intro/castle.png')
         image.anchor_x = image.width / 2
@@ -115,14 +111,13 @@ class Final(Scene):
         player.do(Jump(5, 40, 5, 4))
 
         self.sprites = [sky, castle, intro_1, player]
-        self.front = []
         self.layer = layer
 
     def on_draw(self):
+        self.world.clear()
         for s in self.sprites:
             s.draw()
 
         self.layer.blit(0, 0)
 
-        for s in self.front:
-            s.draw()
+        self.text.draw()
