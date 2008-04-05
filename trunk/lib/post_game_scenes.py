@@ -121,3 +121,13 @@ class Final(Scene):
         self.layer.blit(0, 0)
 
         self.text.draw()
+
+
+class Regular(Scale):
+
+    def __init__(self, world):
+        Scale.__init__(self, world)
+
+    def on_draw(self):
+        pass
+
