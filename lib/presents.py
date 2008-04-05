@@ -30,8 +30,8 @@ class Presents(Scene):
         animation = pyglet.image.Animation.from_image_sequence(images, 0.10)
         self.logo = ActionSprite(animation)
         self.logo.do(actions)
-        self.logo.x = 6
-        self.logo.y = 110
+        self.logo.x = 0
+        self.logo.y = 0
 
         images = [
                 common.load_image('presents/pyweek_1.png'),
@@ -42,8 +42,8 @@ class Presents(Scene):
         self.pyweek = ActionSprite(animation)
         self.pyweek.opacity = 0
         self.pyweek.do(Delay(2.5) + actions)
-        self.pyweek.x = 6
-        self.pyweek.y = 110
+        self.pyweek.x = 0
+        self.pyweek.y = 0
 
     def on_draw(self):
         self.background.blit(0, 0)
