@@ -15,6 +15,14 @@ class Level:
         self.game = game
         self.group = game.group
         self.sprites = []
+        self.dt = 0.0
+
+    def new_update(self, dt):
+        self.dt += dt
+
+        if self.dt > 0.5:
+            self.update()
+            self.dt -= 0.5
 
     def update(self):
         """Avanza en la linea de tiempo y genera movimientos si es

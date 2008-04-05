@@ -1,5 +1,6 @@
 # -*- encoding: utf-8 -*-
 import pyglet
+from pyglet.gl import *
 from cocos.actions import *
 
 import common
@@ -49,9 +50,13 @@ class Presents(Scene):
         self.pyweek.y = 0
 
     def on_draw(self):
+        glColor3f(1, 1, 1)
         self.background.blit(0, 0)
+        glColor3f(1, 1, 1)
         self.logo.draw()
+        glColor3f(1, 1, 1)
         self.pyweek.draw()
+        glColor3f(1, 1, 1)
         self.text.draw()
 
     def update(self, dt):

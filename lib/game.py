@@ -1,6 +1,7 @@
 # -*- encoding: utf-8 -*-
 import pyglet
 from cocos.actions import *
+from pyglet.gl import *
 
 from scene import Scene
 import common
@@ -32,7 +33,8 @@ class Playing(State):
         self.game.world.audio.play_music('game')
         self.game.create_lights()
         game.message.set_text("Go!")
-        pyglet.clock.schedule_interval(self.game.on_update_level, 0.5)
+        self.game.do_update_level = True
+        #pyglet.clock.schedule_interval(self.game.on_update_level, 0.5)
 
     def update(self, dt):
         self.game.update_all_objects(dt)
@@ -44,6 +46,7 @@ class Starting(State):
         game.world.audio.stop_music()
         game.world.audio.play('ready')
         game.message.set_text("Are you ready?")
+        game.do_update_level = False
 
     def update(self, dt):
         self.step += dt
@@ -210,7 +213,8 @@ class Game(Scene):
 
         for motion in self.level.sprites:
             motion.draw()
-
+        
+        glColor3f(1, 1, 1)
         self.mouse.post_draw()
 
         self.message.draw()
@@ -220,6 +224,9 @@ class Game(Scene):
         self.mouse.update(dt)
         self.tv.update(dt)
         self._state.update(dt)
+
+        if self.do_update_level:
+            self.level.new_update(dt)
 
     def update_all_objects(self, dt):
         self.player.update(dt)

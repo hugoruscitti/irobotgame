@@ -4,6 +4,7 @@ import random
 
 import pyglet
 from cocos.actions import *
+from pyglet.gl import *
 
 from scene import Scene
 import game
@@ -103,11 +104,15 @@ class Title(Scene):
                 over.opacity = 0.0
 
     def on_draw(self):
+        glColor3f(1, 1, 1)
         self.background.blit(0, 0)
 
+
         for s in self.sprites:
+            glColor3f(1, 1, 1)
             s.draw()
 
+        glColor3f(1, 1, 1)
         self.text.draw()
 
     def on_mouse_press(self, x, y, bottom, extra=None):
