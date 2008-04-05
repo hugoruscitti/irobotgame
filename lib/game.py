@@ -72,14 +72,24 @@ class Ending(State):
 
     def __init__(self, game):
         State.__init__(self, game)
-        score = game.group.get_score()
 
     def update(self, dt):
         self.step += dt
 
         if self.step > 2:
-            new_scene = post_game_scenes.Final(self.game.world)
-            self.game.world.change_scene(new_scene)
+            score = self.game.group.get_score()
+
+            if score == 4:
+                new_scene = post_game_scenes.Final(self.game.world)
+                self.game.world.change_scene(new_scene)
+            elif score == 3:
+                new_scene = post_game_scenes.Regular(self.game.world)
+                self.game.world.change_scene(new_scene)
+            else:
+                new_scene = post_game_scenes.GameOver(self.game.world)
+                self.game.world.change_scene(new_scene)
+
+
 
 
 class Game(Scene):

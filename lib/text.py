@@ -32,7 +32,7 @@ class History(AbstractText):
 
     def __init__(self, text):
         self.text = text
-        self.label = pyglet.text.Label('', font_size=18, x=30, y=80, dpi=96)
+        self.label = pyglet.text.Label('', font_size=18, x=100, y=80, dpi=96)
         pyglet.clock.schedule_interval(self._update, 0.01)
 
 
