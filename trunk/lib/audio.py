@@ -22,11 +22,11 @@ class Audio:
 
     def play_music(self, name):
         if config.AUDIO:
+            self.stop_music()
+
             if name == 'game':
-                self.music_intro.pause()
                 self.music_game.play()
             else:
-                self.music_game.pause()
                 self.music_intro.play()
 
     def stop_music(self):
@@ -34,7 +34,6 @@ class Audio:
         self.music_game.pause()
 
     def _load_sounds(self):
-        self.sound = pyglet.media.Player()
         self.sounds = {
                 'fail': common.load_sound('sounds/fail.wav'),
                 's1': common.load_sound('sounds/s1.wav'),
@@ -49,6 +48,7 @@ class Audio:
     def update(self):
         if config.AUDIO:
             pyglet.media.dispatch_events()
+
             if self.music_game.playing:
                 self.music_game.dispatch_events()
             elif self.music_intro.playing:
@@ -56,11 +56,11 @@ class Audio:
 
     def play(self, name):
         if config.AUDIO:
-            self.sound.queue(self.sounds[name])
-            self.sound.play()
+            self.sounds[name].play()
+            #self.sound.queue(self.sounds[name])
+            #self.sound.play()
 
     def play_correct_move(self):
         list = ['s1', 's2', 's3', 's4']
         item = random.choice(list)
-        self.sound.queue(self.sounds[item])
-        self.sound.play()
+        self.sounds[item].play()

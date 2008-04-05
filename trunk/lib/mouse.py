@@ -101,8 +101,6 @@ class Mouse:
                 #print "Sale en: %d (e ingreso en %d)" %(angle, self.exit_angle)
                 self.are_in = True
 
-                #self._check_motion(angle)
-
     def _check_motion(self, angle):
         """Se llama cuando concluye un movimiento.
 

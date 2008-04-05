@@ -41,15 +41,17 @@ class BigMessage(AbstractText):
 
     def __init__(self, text, x=320):
         self.text = text
-        self.label = pyglet.text.Label('', font_size=40, x=x, y=240, dpi=96)
+        self.label = pyglet.text.Label('', font_size=40, x=x, y=240, dpi=96,
+                bold=True)
         pyglet.clock.schedule_interval(self._update, 0.01)
 
 
 class GameMessage(AbstractText):
     "Texto que se muestra mientras transcurre el juego."
 
-    def __init__(self, text):
-        self.label = pyglet.text.Label('', font_size=30, x=x, y=240, dpi=96)
+    def __init__(self, text=''):
+        self.label = pyglet.text.Label('', font_size=18, x=512, y=280, dpi=96,
+                valign='center', halign='center')
         self.set_text(text)
 
     def set_text(self, text):

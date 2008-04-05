@@ -17,12 +17,15 @@ MSG_START = 'Press space, enter or "click" to start the game.'
 
 class Title(Scene):
 
-    def __init__(self, world):
+    def __init__(self, world, start_music=True):
         Scene.__init__(self, world)
         self.step = 0
         self._create_sprites()
         self.background = common.load_image('black.png')
         self.text = text.Text(MSG_START, 170, 10)
+
+        if start_music:
+            self.world.audio.play_music('intro')
 
     def _create_sprites(self):
         player = ActionSprite(common.load_image('title/player.png'))

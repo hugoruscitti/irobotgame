@@ -32,7 +32,7 @@ class Intro(Scene):
             self.skip_scene()
 
     def skip_scene(self):
-        self.world.change_scene(title.Title(self.world))
+        self.world.change_scene(title.Title(self.world, start_music=False))
 
     def on_mouse_press(self, x, y, button, extra=None):
         self.skip_scene()
