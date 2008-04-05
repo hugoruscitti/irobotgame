@@ -1,4 +1,6 @@
 # -*- encoding: utf-8 -*-
+import pyglet
+
 import common
 import motion
 
@@ -7,10 +9,11 @@ class Level:
 
     Conoce al grupo de robots que baila..."""
 
-    def __init__(self, group):
+    def __init__(self, game):
         self._load_map()
         self.step = 0
-        self.group = group
+        self.game = game
+        self.group = game.group
         self.sprites = []
 
     def update(self):
@@ -33,8 +36,8 @@ class Level:
             if items[0] != ' ' or items[1] != ' ':
                 return items
         else:
-            # TODO: hacer algo para indicar el cambio de nivel
-            print "Ha finalizado el nivel..."
+            if not self.sprites:
+                self.game.on_end_level()
 
     def _load_map(self):
         stream = common.open('level.txt')

@@ -38,10 +38,10 @@ class World(pyglet.window.Window):
         else:
             #import title
             #self.change_scene(title.Title(self))
-            import post_game_scenes
-            self.change_scene(post_game_scenes.GameOver(self))
-            #import intro
-            #self.change_scene(intro.Intro(self))
+            #import post_game_scenes
+            #self.change_scene(post_game_scenes.GameOver(self))
+            import presents
+            self.change_scene(presents.Presents(self))
 
     def run(self):
         pyglet.app.run()

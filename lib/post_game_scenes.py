@@ -47,8 +47,8 @@ class GameOver(Scene):
         self.sprites = [mounstro, personajes]
 
     def _create_game_over_text(self, dt):
-        message_1 = text.BigMessage("Game Over", x=150)
-        message_2 = text.Text(MSG_START, 145, 10, color=text.WHITE)
+        message_1 = text.BigMessage("Game Over", x=155)
+        message_2 = text.Text(MSG_START, 160, 10, color=text.WHITE)
         self.texts.append(message_1)
         self.texts.append(message_2)
 
@@ -65,6 +65,6 @@ class GameOver(Scene):
             text.draw()
 
     def on_key_press(self, symbol, extra):
-        if common.is_continue_key(symbol):
+        if common.is_continue_key(symbol) or common.is_cancel_key(symbol):
             pyglet.clock.unschedule(self._create_game_over_text)
             self.world.change_scene(title.Title(self.world))

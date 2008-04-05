@@ -11,7 +11,7 @@ def load_image(path):
     return pyglet.image.load(os.path.join(DATADIR, path))
 
 def load_music(path):
-    return pyglet.media.load(os.path.join(DATADIR, path))
+    return pyglet.media.load(os.path.join(DATADIR, path), streaming=True)
 
 def load_sound(path):
     return pyglet.media.load(os.path.join(DATADIR, path), streaming=False)

@@ -13,6 +13,7 @@ import group
 import title
 import lights
 import post_game_scenes
+import text
 
 
 class State:
@@ -29,6 +30,7 @@ class Playing(State):
         self.game.world.audio.play('go')
         self.game.world.audio.play_music('game')
         self.game.create_lights()
+        game.message.set_text("Go!")
         pyglet.clock.schedule_interval(self.game.on_update_level, 0.5)
 
     def update(self, dt):
@@ -40,6 +42,7 @@ class Starting(State):
         State.__init__(self, game)
         game.world.audio.stop_music()
         game.world.audio.play('ready')
+        game.message.set_text("Are you ready?")
 
     def update(self, dt):
         self.step += dt
@@ -65,6 +68,17 @@ class Losing(State):
             new_scene = post_game_scenes.GameOver(self.game.world)
             self.game.world.change_scene(new_scene)
 
+
+class Ending(State):
+
+    def __init__(self, game):
+        State.__init__(self, game)
+
+    def update(self, dt):
+        self.step += dt
+
+
+
 class Game(Scene):
     "Escena de juego donde los personajes están en el escenario."
 
@@ -81,11 +95,11 @@ class Game(Scene):
         self.mouse = mouse.Mouse(self.player, self)
         self.world.capture_mouse()
         self.group = group.Group()
-        self.level = level.Level(self.group)
-
+        self.level = level.Level(self)
 
         # TODO: Crear un módulo nuevo para esta verificación
         self.actual_move = 0
+        self.message = text.GameMessage()
         self.change_state(Starting(self))
 
     def change_state(self, state):
@@ -105,8 +119,9 @@ class Game(Scene):
     def on_update_level(self, dt):
         done = self.level.update()
 
-        if done:
-            self.game.change_state(LevelDone(self.game))
+    def on_end_level(self):
+        pyglet.clock.unschedule(self.on_update_level)
+        self.change_state(Ending(self))
 
     def set_state(self, code):
         motions = self.level.get_motions_by_code(code)
@@ -121,6 +136,7 @@ class Game(Scene):
 
         # En caso de fallar y que no existan flechas evita que pieda
         if fail and self.level.are_empty():
+            self.message.set_text("Wait that arrows arrives...")
             # TODO: Avisar al usuario que no mueva tanto el MOUSE
             pass
         else:
@@ -155,6 +171,8 @@ class Game(Scene):
         for motion in self.level.sprites:
             motion.draw()
 
+        self.message.draw()
+
     def update(self, dt):
         self.mouse.update(dt)
         self._state.update(dt)
@@ -186,6 +204,7 @@ class Game(Scene):
             pyglet.clock.unschedule(self.on_update_level)
             self.world.change_scene(title.Title(self.world))
         elif symbol == pyglet.window.key.F5:
+            pyglet.clock.unschedule(self.on_update_level)
             self.world.change_scene(Game(self.world))
 
     def on_mouse_drag(self, x, y, dx, dy, button, extra):

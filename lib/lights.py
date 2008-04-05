@@ -14,6 +14,7 @@ class LightCircle(ActionSprite):
         self.center_x = 220
         self.center_y = CENTER_Y
         self.step = 0
+        self.update(0)
 
     def update(self, dt):
         self.step += dt * 1.5
@@ -30,6 +31,7 @@ class Light(ActionSprite):
         self.x = 220
         self.y = 380 + CENTER_Y
         self.step = 0
+        self.update(0)
 
     def update(self, dt):
         self.step += dt * 1.5
