@@ -66,6 +66,12 @@ Linux:
     
     python run_game.py
 
+  if you have any problems with media please run:
+
+    svn checkout http://avbin.googlecode.com/svn/trunk/ avbin-read-only
+    cd avbin-read-only/
+    ./build.sh linux-x86-32                (or linux-x86-64)
+
 
 
 Windows:

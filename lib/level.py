@@ -1,4 +1,10 @@
 # -*- encoding: utf-8 -*-
+# I Robot? - a dancing robot game for pyweek
+#
+# Copyright: 2008 Hugo Ruscitti
+# License: GPL 3
+# Web: http://www.losersjuegos.com.ar
+
 import pyglet
 
 import common
@@ -16,6 +22,26 @@ class Level:
         self.group = game.group
         self.sprites = []
         self.dt = 0.0
+        self._load_motion_images()
+
+    def _load_motion_images(self):
+        self.images = [
+                None,
+                common.load_image('moves/1.png'),
+                common.load_image('moves/2.png'),
+                common.load_image('moves/3.png'),
+                common.load_image('moves/4.png'),
+                None,
+                common.load_image('moves/6.png'),
+                common.load_image('moves/7.png'),
+                common.load_image('moves/8.png'),
+                common.load_image('moves/9.png'),
+                ]
+
+        for image in self.images:
+            if image:
+                image.anchor_x = 128
+                image.anchor_y = 147
 
     def new_update(self, dt):
         self.dt += dt
@@ -33,7 +59,8 @@ class Level:
         if item:
             move_id, delay = item
             self.group.do_move(move_id, delay)
-            self.sprites.append(motion.Motion(move_id, delay, self))
+            image = self.images[int(move_id)]
+            self.sprites.append(motion.Motion(image, move_id, delay, self))
 
     def _advance(self):
         self.step += 1

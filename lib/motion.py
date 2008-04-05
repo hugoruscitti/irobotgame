@@ -1,3 +1,9 @@
+# I Robot? - a dancing robot game for pyweek
+#
+# Copyright: 2008 Hugo Ruscitti
+# License: GPL 3
+# Web: http://www.losersjuegos.com.ar
+
 from cocos.actions import *
 import pyglet
 import common
@@ -6,9 +12,8 @@ SPEED = 0.3
 
 class Motion(ActionSprite):
 
-    def __init__(self, motion, delay, level):
-        self._load_images(motion)
-        ActionSprite.__init__(self, self.img)
+    def __init__(self, image, motion, delay, level):
+        ActionSprite.__init__(self, image)
         self.x = 640 - 128
         self.y = 147
         self.opacity = 0
@@ -19,13 +24,6 @@ class Motion(ActionSprite):
         self.timer = 0
         self.delete_me = False
         self.level = level
-
-    def _load_images(self, motion):
-        image = common.load_image('moves/%s.png' %(motion))
-        image.anchor_x = 128
-        image.anchor_y = 147
-
-        self.img = image
 
     def kill(self):
         self.are_active = False

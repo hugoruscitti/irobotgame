@@ -1,4 +1,10 @@
 # -*- encoding: utf-8 -*-
+# I Robot? - a dancing robot game for pyweek
+#
+# Copyright: 2008 Hugo Ruscitti
+# License: GPL 3
+# Web: http://www.losersjuegos.com.ar
+
 import math
 import random
 
@@ -102,6 +108,13 @@ class Title(Scene):
                 over.opacity = random.randint(0, 200)
             else:
                 over.opacity = 0.0
+
+    def destroy(self):
+        for sprite in self.sprites:
+            try:
+                sprite.stop()
+            except AttributeError:
+                pass
 
     def on_draw(self):
         glColor3f(1, 1, 1)
