@@ -11,6 +11,7 @@ import title
 import text
 
 MSG_START = 'Press space, enter or "click" to return to title screen.'
+MSG_REGULAR = 'Well, but you can improve...'
 
 class GameOver(Scene):
 
@@ -77,6 +78,12 @@ class Final(Scene):
         self.step = 0
         self._create_sprites()
         self.text = text.History("Good bye robot city...")
+        self.texts = []
+        pyglet.clock.schedule_once(self._create_text, 3)
+
+    def _create_text(self, dt):
+        message = text.Text(MSG_START, 150, 10, color=text.WHITE)
+        self.texts.append(message)
 
     def update(self, dt):
         self.step += dt
@@ -102,7 +109,6 @@ class Final(Scene):
         intro_1 = ActionSprite(ima)
         intro_1.x = 95 + image.width / 2
         intro_1.y = 80
-        intro_1.do(Move((0, 20), 4) | Scale(1.1, 4))
 
         player = ActionSprite(common.load_image('intro/player.png'))
         player.x = 400
@@ -115,19 +121,89 @@ class Final(Scene):
 
     def on_draw(self):
         self.world.clear()
+
+        for s in self.sprites:
+            s.draw()
+
+        self.layer.blit(0, 0)
+        self.text.draw()
+
+        for t in self.texts:
+            t.draw()
+
+    def on_key_press(self, symbol, extra):
+        if common.is_continue_key(symbol) or common.is_cancel_key(symbol):
+            pyglet.clock.unschedule(self._create_text)
+            self.world.change_scene(title.Title(self.world))
+
+
+class Regular(Scene):
+
+    def __init__(self, world):
+        Scene.__init__(self, world)
+        self._create_sprites()
+        self._create_history()
+        pyglet.clock.schedule_once(self._create_text, 3)
+
+    def _create_sprites(self):
+        ima_background = common.load_image('intro/background.png')
+        self.layer = common.load_image('layer.png')
+
+        noise = [
+                common.load_image('intro/noise_1.png'),
+                common.load_image('intro/noise_2.png'),
+                ]
+        step = 0
+
+        table = ActionSprite(common.load_image('intro/table.png'))
+        table.x = 110
+        table.y = 134
+
+        frame_1 = common.load_image('intro/child_1.png')
+        frame_2 = common.load_image('intro/child_2.png')
+
+        run = ActionSprite(frame_1)
+        run.x = 800
+        run.y = 44
+        run.do(Goto((450, 44), 0.3) | Rotate(-20, 0.3) + Rotate(+20, 0.1))
+
+        self.background = ima_background
+        self.run = run
+        self.sprites = [table]
+        self.sprites_front = [run]
+        self.noise = noise
+
+        self.step = 0
+        self.step_1 = 0
+        self.frames = [frame_1, frame_2]
+
+    def on_draw(self):
+        self.world.clear()
+        self.background.blit(95, 120)
+        self.noise[int(self.step % 2)].blit(95, 120)
+
         for s in self.sprites:
             s.draw()
 
         self.layer.blit(0, 0)
 
-        self.text.draw()
+        for s in self.sprites_front:
+            s.draw()
 
+    def update(self, dt):
+        self.step += 0.5
+        self.step_1 += 0.05
+        self.run.image = self.frames[int(self.step_1 % 2)]
 
-class Regular(Scale):
+    def on_key_press(self, symbol, extra):
+        if common.is_continue_key(symbol) or common.is_cancel_key(symbol):
+            pyglet.clock.unschedule(self._create_text)
+            self.world.change_scene(title.Title(self.world))
 
-    def __init__(self, world):
-        Scale.__init__(self, world)
-
-    def on_draw(self):
-        pass
-
+    def _create_history(self):
+        message = text.History(MSG_REGULAR)
+        self.sprites_front.append(message)
+    
+    def _create_text(self, dt):
+        message = text.Text(MSG_START, 150, 10, color=text.WHITE)
+        self.sprites_front.append(message)
