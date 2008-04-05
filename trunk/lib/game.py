@@ -14,6 +14,7 @@ import title
 import lights
 import post_game_scenes
 import text
+import tv
 
 
 class State:
@@ -99,6 +100,7 @@ class Game(Scene):
         Scene.__init__(self, world)
         self._load_images()
 
+        self.good_moves_combo = 0
         self.sprites = []
         self.upper_lights = []
         self.lower_ligths = []
@@ -158,11 +160,18 @@ class Game(Scene):
 
                 # Si falla hace que se enoje uno de los robots
                 if fail:
+                    self.good_moves_combo = 0
                     self.world.audio.play('stop')
                     all_robot_are_angry = self.group.stop_dancing_one_robot()
 
                     if all_robot_are_angry:
                         self.change_state(Losing(self))
+                else:
+                    self.good_moves_combo += 1
+
+                    if self.good_moves_combo > 3:
+                        self.group.restore_dancing()
+                        self.good_moves_combo = 0
 
     def on_draw(self):
         self._background.blit(0, 0)

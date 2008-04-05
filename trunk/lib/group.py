@@ -50,3 +50,9 @@ class Group:
 
     def get_score(self):
         return len(self.get_robot_dancing())
+
+    def restore_dancing(self):
+        for robot in self.robots:
+            if not robot.dancing:
+                robot.unset_angry()
+                return
