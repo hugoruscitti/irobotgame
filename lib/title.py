@@ -10,6 +10,7 @@ import game
 import common
 import text
 import presents
+import about
 
 LEFT_X, LEFT_Y = 88, 82
 RIGHT_X, RIGHT_Y = 388, 79
@@ -116,5 +117,4 @@ class Title(Scene):
             self.world.change_scene(presents.Presents(self.world))
         elif symbol == pyglet.window.key.ESCAPE:
             self.world.change_scene(about.About(self.world))
-            print "Asdasdasd"
 

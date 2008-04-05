@@ -34,7 +34,8 @@ class World(pyglet.window.Window):
         pyglet.clock.schedule_interval(self.update, 1/60.0)
 
         if config.DEBUG:
-            self.change_scene(game.Game(self))
+            import about
+            self.change_scene(about.About(self))
         else:
             #import title
             #self.change_scene(title.Title(self))
