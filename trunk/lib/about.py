@@ -1,4 +1,10 @@
 # -*- encoding: utf-8 -*-
+# I Robot? - a dancing robot game for pyweek
+#
+# Copyright: 2008 Hugo Ruscitti
+# License: GPL 3
+# Web: http://www.losersjuegos.com.ar
+
 import sys
 
 import pyglet
@@ -38,11 +44,17 @@ class About(Scene):
         pyglet.clock.schedule_once(self.show_losersjuegos_logo, 4 + 3 * 2)
 
     def init(self):
-        for index, name in enumerate(self.names):
-            #time = 0.5 + index * 2 + 1
-            #pyglet.clock.schedule_once(self.show_name[name], time)
-            #pyglet.clock.schedule_once(self.hide_text, time + 1)
-            pass
+        for index, sprite in enumerate(self.sprites):
+            name = sprite.name
+            image = sprite.image_copy
+            SPEED = 0.5
+            sprite.do(Delay(index * 2) + Delay(1) +  
+                    (FadeIn(SPEED) | Move((0, image.height), SPEED)) +
+                    CallFuncS(show_name, (name, self.name)) + 
+                    Delay(1) + CallFuncS(hide_text, self.name) + 
+                    (Scale(0.3, 1) | Move((350 - index * 70, 0), 1)))
+
+
 
     def show_losersjuegos_logo(self, dt):
         images = [
@@ -84,13 +96,9 @@ class About(Scene):
             sprite = ActionSprite(image)
             sprite.x = 50
             sprite.y = - image.height
+            sprite.image_copy = image
+            sprite.name = name
             sprite.opacity = 0
-            SPEED = 0.5
-            sprite.do(Delay(index * 2) + Delay(1) +  
-                    (FadeIn(SPEED) | Move((0, image.height), SPEED)) +
-                    CallFuncS(show_name, (name, self.name)) + 
-                    Delay(1) + CallFuncS(hide_text, self.name) + 
-                    (Scale(0.3, 1) | Move((350 - index * 70, 0), 1)))
 
             self.sprites.append(sprite)
 

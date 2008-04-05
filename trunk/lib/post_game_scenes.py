@@ -1,6 +1,13 @@
 # -*- encoding: utf-8 -*-
+# I Robot? - a dancing robot game for pyweek
+#
+# Copyright: 2008 Hugo Ruscitti
+# License: GPL 3
+# Web: http://www.losersjuegos.com.ar
+
 import pyglet 
 from cocos.actions import *
+from pyglet.gl import *
 
 from scene import Scene
 import title
@@ -22,6 +29,8 @@ class GameOver(Scene):
         self._load_images()
         self.are_showing_message = False
         self.texts = []
+        self.layer = common.load_image('game_over_layer.png')
+        self.show_layer = False
         pyglet.clock.schedule_once(self._create_game_over_text, 3)
 
     def _load_images(self):
@@ -56,6 +65,7 @@ class GameOver(Scene):
         self.texts.append(message_1)
         self.texts.append(message_2)
         self.texts.append(message_3)
+        self.show_layer = True
 
     def update(self, dt):
         pass
@@ -65,6 +75,9 @@ class GameOver(Scene):
 
         for s in self.sprites:
             s.draw()
+
+        if self.show_layer:
+            self.layer.blit(0, 0)
 
         for text in self.texts:
             text.draw()
