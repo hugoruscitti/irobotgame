@@ -23,7 +23,7 @@ class Audio:
     def play_music(self, name):
         if config.AUDIO:
             self.stop_music()
-
+            self._load_music()
             if name == 'game':
                 self.music_game.play()
             else:

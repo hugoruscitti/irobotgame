@@ -2,6 +2,7 @@
 import random
 import pyglet
 import common
+import tv
 
 DELAY_TO_RETURN = 0.4
 
@@ -18,12 +19,10 @@ class Wait(State):
         State.__init__(self, player)
         self.step = 0
         player.set_image(51)
+        player.tv.change_state(tv.Wait(player.tv))
 
     def update(self, dt):
-        self.step += dt
-
-        if self.step > 2:
-            self.player.change_state(Dancing(self.player))
+        self.player.change_state(Dancing(self.player))
 
 class Fail(State):
     "Espera mostrando que se ha equivocado."
@@ -47,6 +46,7 @@ class Dancing(State):
         State.__init__(self, player)
         self.animation = [51, 52, 51, 5]
         self.step = 0
+        player.tv.change_state(tv.Dancing(player.tv))
 
     def update(self, dt):
         self.step += dt * 5
@@ -81,8 +81,10 @@ class Motion(State):
 
         if fail_this_move:
             player.audio.play('fail')
+            player.tv.change_state(tv.Fail(player.tv))
         else:
             player.audio.play_correct_move()
+            player.tv.change_state(tv.Well(player.tv))
 
     def update(self, dt):
         self.step += dt
@@ -99,7 +101,7 @@ class Motion(State):
 class Player:
     "Representa a la protagonista del juego que baila."
 
-    def __init__(self, x, y, game):
+    def __init__(self, x, y, game, tv):
         self.x = x
         self.y = y
         self.state = None
@@ -109,8 +111,8 @@ class Player:
         self._load_images()
         self.set_image(5)
         self._restart()
-
-        self.change_state(Dancing(self))
+        self.tv = tv
+        self.change_state(Wait(self))
 
     def change_state(self, new_state):
         # solo deja cambiar el estado del personaje si está Bailando
