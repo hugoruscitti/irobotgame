@@ -50,7 +50,7 @@ class GameMessage(AbstractText):
     "Texto que se muestra mientras transcurre el juego."
 
     def __init__(self, text=''):
-        self.label = pyglet.text.Label('', font_size=18, x=512, y=280, dpi=96,
+        self.label = pyglet.text.Label('', font_size=18, x=512, y=260, dpi=96,
                 valign='center', halign='center')
         self.set_text(text)
 

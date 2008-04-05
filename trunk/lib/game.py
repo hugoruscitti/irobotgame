@@ -104,9 +104,10 @@ class Game(Scene):
         self.sprites = []
         self.upper_lights = []
         self.lower_ligths = []
+        self.tv = tv.Tv()
         #self._create_light()
 
-        self.player = player.Player(100, 80, self)
+        self.player = player.Player(100, 80, self, self.tv)
         self.mouse = mouse.Mouse(self.player, self)
         self.world.capture_mouse()
         self.group = group.Group()
@@ -123,6 +124,7 @@ class Game(Scene):
     def _load_images(self):
         self._background = common.load_image('game_background.png')
         self._layer = common.load_image('game_layer.png')
+        self._layer.anchor_x = 256
 
     def create_lights(self):
         sprite = lights.Light()
@@ -175,7 +177,7 @@ class Game(Scene):
 
     def on_draw(self):
         self._background.blit(0, 0)
-        self._layer.blit(0, 0)
+        self._layer.blit(640, 0)
 
         for light in self.lower_ligths:
             light.draw()
@@ -196,9 +198,11 @@ class Game(Scene):
         self.mouse.post_draw()
 
         self.message.draw()
+        self.tv.draw()
 
     def update(self, dt):
         self.mouse.update(dt)
+        self.tv.update(dt)
         self._state.update(dt)
 
     def update_all_objects(self, dt):

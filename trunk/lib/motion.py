@@ -9,8 +9,8 @@ class Motion(ActionSprite):
     def __init__(self, motion, delay):
         self._load_images(motion)
         ActionSprite.__init__(self, self.img)
-        self.x = 515
-        self.y = 160
+        self.x = 640 - 128
+        self.y = 147
         self.opacity = 0
         self.motion = int(motion)
         self.delay = int(delay) / 2.0
@@ -21,15 +21,10 @@ class Motion(ActionSprite):
 
     def _load_images(self, motion):
         image = common.load_image('moves/%s.png' %(motion))
-        image.anchor_x = image.width / 2
-        image.anchor_y = image.height / 2
-
-        fail = common.load_image('fails/%s.png' %(motion))
-        fail.anchor_x = fail.width / 2
-        fail.anchor_y = fail.height / 2
+        image.anchor_x = 128
+        image.anchor_y = 147
 
         self.img = image
-        self.fail = fail
 
     def kill(self):
         self.are_active = False
@@ -46,9 +41,8 @@ class Motion(ActionSprite):
         self.timer += dt
 
         if self.are_active and self.timer > SPEED + self.delay:
-            self.image = self.fail
+            self.do(Scale(0.1, SPEED) | FadeOut(SPEED))
             self.are_active = False
-            #self.do(FadeOut(SPEED))
 
             # TODO: esto es otro sucio hack...
             self.timer = -10
