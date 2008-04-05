@@ -1,8 +1,9 @@
 DEBUG = False
-MOVE_WINDOW = True
+MOVE_WINDOW = False
 AUDIO = True
 SHOW_MOUSE = False
 SHOW_PAD = True
 FULLSCREEN = False
+
 RESTORE_MOUSE = False
 VALUE_MOUSE_MOVE = 1

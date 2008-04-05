@@ -30,8 +30,9 @@ class Audio:
                 self.music_intro.play()
 
     def stop_music(self):
-        self.music_intro.pause()
-        self.music_game.pause()
+        if config.AUDIO:
+            self.music_intro.pause()
+            self.music_game.pause()
 
     def _load_sounds(self):
         self.sounds = {
