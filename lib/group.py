@@ -11,7 +11,6 @@ class Group:
                 robot.Robot(-30, 130, 1, 1),
                 ]
 
-
     def update(self, dt):
         for robot in self.robots:
             robot.update(dt)
@@ -48,3 +47,6 @@ class Group:
 
         for r in robots:
             r.change_state(robot.Dancing(r))
+
+    def get_score(self):
+        return len(self.get_robot_dancing())

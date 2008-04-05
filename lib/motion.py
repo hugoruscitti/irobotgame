@@ -1,4 +1,5 @@
 from cocos.actions import *
+import pyglet
 import common
 
 SPEED = 0.3
@@ -32,9 +33,14 @@ class Motion(ActionSprite):
 
     def kill(self):
         self.are_active = False
-        self.stop()
+        try:
+            self.stop()
+        except:
+            pass
+
         speed = 0.3
         self.do(Scale(2, speed) | FadeOut(speed))
+        pyglet.clock.schedule_once(self._delete, speed)
 
     def update(self, dt):
         self.timer += dt
@@ -49,6 +55,5 @@ class Motion(ActionSprite):
         elif 0 > self.timer > -9:
             self._delete()
 
-    def _delete(self):
-        self.stop()
+    def _delete(self, dt=None):
         self.delete_me = True

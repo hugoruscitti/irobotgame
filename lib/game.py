@@ -49,7 +49,6 @@ class Starting(State):
 
         if self.step > 2.5:
             self.game.change_state(Playing(self.game))
-            pass
 
 
 class Losing(State):
@@ -73,10 +72,14 @@ class Ending(State):
 
     def __init__(self, game):
         State.__init__(self, game)
+        score = game.group.get_score()
 
     def update(self, dt):
         self.step += dt
 
+        if self.step > 2:
+            new_scene = post_game_scenes.Final(self.game.world)
+            self.game.world.change_scene(new_scene)
 
 
 class Game(Scene):
@@ -136,7 +139,7 @@ class Game(Scene):
 
         # En caso de fallar y que no existan flechas evita que pieda
         if fail and self.level.are_empty():
-            self.message.set_text("Wait that arrows arrives...")
+            #self.message.set_text("Wait that arrows arrives...")
             # TODO: Avisar al usuario que no mueva tanto el MOUSE
             pass
         else:
