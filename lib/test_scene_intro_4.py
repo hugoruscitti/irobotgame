@@ -4,14 +4,6 @@ import common
 from pyglet.gl import *
 
 
-class Child:
-
-    def __init__(self):
-        pass
-
-
-
-
 window = pyglet.window.Window()
 
 glEnable(GL_BLEND)
