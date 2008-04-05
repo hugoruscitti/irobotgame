@@ -5,8 +5,10 @@ class Scene:
         self.world = world
 
     def update(self, dt):
-        print "Error: se debe extender el metodo Scene:update"
-        pass
+        print "Error: se debe extender el metodo Scene.update"
 
     def destroy(self):
-        pass
+        print "Error: se debe extender el metodo Scene.destroy"
+
+    def init(self):
+        print "Cuidado: no redefine Scene.init"

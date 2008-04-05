@@ -58,11 +58,9 @@ class Audio:
     def play(self, name):
         if config.AUDIO:
             self.sounds[name].play()
-            #self.sound.queue(self.sounds[name])
-            #self.sound.play()
 
     def play_correct_move(self):
-        #list = ['s1', 's2', 's3', 's4']
-        list = ['s4']
-        item = random.choice(list)
-        self.sounds[item].play()
+        if config.AUDIO:
+            list = ['s4']
+            item = random.choice(list)
+            self.sounds[item].play()

@@ -4,6 +4,7 @@ AUDIO = True
 SHOW_MOUSE = False
 SHOW_PAD = True
 FULLSCREEN = False
+VSYNC = True
 
 RESTORE_MOUSE = False
 VALUE_MOUSE_MOVE = 1

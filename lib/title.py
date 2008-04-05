@@ -28,6 +28,9 @@ class Title(Scene):
         if start_music:
             self.world.audio.play_music('intro')
 
+    def init(self):
+        pass
+
     def _create_sprites(self):
         player = ActionSprite(common.load_image('title/player.png'))
         player.x = 240
