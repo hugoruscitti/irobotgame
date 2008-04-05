@@ -140,6 +140,14 @@ class Game(Scene):
         pyglet.clock.unschedule(self.on_update_level)
         self.change_state(Ending(self))
 
+    def on_motion_lost(self):
+        all_robot_are_angry = self.group.stop_dancing_one_robot()
+        self.good_moves_combo = 0
+        self.world.audio.play('stop')
+
+        if all_robot_are_angry:
+            self.change_state(Losing(self))
+
     def set_state(self, code):
         motions = self.level.get_motions_by_code(code)
 

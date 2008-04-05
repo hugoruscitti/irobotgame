@@ -6,7 +6,7 @@ SPEED = 0.3
 
 class Motion(ActionSprite):
 
-    def __init__(self, motion, delay):
+    def __init__(self, motion, delay, level):
         self._load_images(motion)
         ActionSprite.__init__(self, self.img)
         self.x = 640 - 128
@@ -18,6 +18,7 @@ class Motion(ActionSprite):
         self.are_active = True
         self.timer = 0
         self.delete_me = False
+        self.level = level
 
     def _load_images(self, motion):
         image = common.load_image('moves/%s.png' %(motion))
@@ -46,6 +47,8 @@ class Motion(ActionSprite):
 
             # TODO: esto es otro sucio hack...
             self.timer = -10
+            self.level.on_motion_lost()
+
         elif 0 > self.timer > -9:
             self._delete()
 
