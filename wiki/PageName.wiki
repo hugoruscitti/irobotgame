@@ -1,0 +1,15 @@
+#summary One-sentence summary of this page.
+
+= I Robot ? =
+
+*irobotgame* is a robot dancing game develop for [http://www.pyweek.org/ pyweek challenge].
+
+= Screen Shots =
+
+ [http://media.pyweek.org/dl/6/losersjuegos/main_scene.jpg]
+
+
+= More info =
+
+  * [http://www.losersjuegos.com.ar Losersjuegos web page]
+  * [http://www.pyweek.org/e/losersjuegos/ Entry at pyweek]
