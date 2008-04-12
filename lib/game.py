@@ -86,6 +86,7 @@ class Ending(State):
     def update(self, dt):
         self.step += dt
 
+        '''
         if self.step > 2:
             score = self.game.group.get_score()
 
@@ -98,6 +99,7 @@ class Ending(State):
             else:
                 new_scene = post_game_scenes.GameOver(self.game.world, self.game)
                 self.game.world.change_scene(new_scene)
+        '''
 
 
 
@@ -131,6 +133,9 @@ class Game(Scene):
 
     def init(self):
         print "Iniciando"
+
+    def destroy(self):
+        print "terminando"
         pass
 
     def change_state(self, state):
@@ -153,7 +158,14 @@ class Game(Scene):
 
     def on_end_level(self):
         pyglet.clock.unschedule(self.on_update_level)
-        self.change_state(Ending(self))
+        score = self.group.get_score()
+
+        if score == 4:
+            new_scene = post_game_scenes.Final(self.world, self)
+            self.world.change_scene(new_scene)
+        elif score < 4:
+            new_scene = post_game_scenes.Regular(self.world, self)
+            self.world.change_scene(new_scene)
 
     def on_motion_lost(self):
         all_robot_are_angry = self.group.stop_dancing_one_robot()
@@ -281,5 +293,3 @@ class Game(Scene):
     def get_score(self):
         return self.arrows_selected + 1
 
-    def destroy(self):
-        pass
