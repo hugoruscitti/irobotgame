@@ -6,6 +6,7 @@
 # Web: http://www.losersjuegos.com.ar
 
 import sys
+import gc
 
 import pyglet
 from pyglet.gl import *
@@ -15,6 +16,7 @@ import config
 import game
 import audio
 import presents
+
 
 class World(pyglet.window.Window):
 
@@ -43,8 +45,9 @@ class World(pyglet.window.Window):
 
         if start_scene:
             if config.DEBUG:
-                import about
-                self.change_scene(about.About(self))
+                import post_game_scenes
+                new_scene = post_game_scenes.Final(self, None)
+                self.change_scene(new_scene)
             else:
                 import presents
                 self.change_scene(presents.Presents(self))
@@ -69,6 +72,7 @@ class World(pyglet.window.Window):
         self._scene = self._new_scene
         self.push_handlers(self._scene)
         self._new_scene = None
+        gc.collect()
 
     def on_draw(self):
         if config.DEBUG:
