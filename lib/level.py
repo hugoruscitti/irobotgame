@@ -103,3 +103,11 @@ class Level:
 
     def on_motion_lost(self):
         self.game.on_motion_lost()
+
+    def clear_when_fail(self):
+        all = [x for x in self.sprites if x.are_active]
+
+        for x in all:
+            x.hide()
+
+        #self.game.on_motion_lost()

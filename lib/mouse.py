@@ -33,7 +33,7 @@ class Mouse:
 
         self.player = player
         self.game = game
-
+        self.visible = True
 
     def draw(self):
         if config.SHOW_MOUSE:
@@ -67,7 +67,7 @@ class Mouse:
         self.cursor = cursor
         self.background = background
         self.mouse = common.load_image('mouse/mouse.png')
-        self.mouse.anchor_x = self.mouse.width / 2
+        self.mouse.anchor_x = self.mouse.width / 2 + 5
         self.mouse.anchor_y = self.mouse.height / 2
 
     def on_mouse_motion(self, x, y, dx, dy):
@@ -141,3 +141,10 @@ class Mouse:
 
         # FIX: esto es un sucio HACK...
         self.on_mouse_motion(0, 0, 0, 0)
+
+    def set_disable(self):
+        self.on_mouse_motion = self.on_mouse_motion_when_are_disable
+
+    def on_mouse_motion_when_are_disable(self, x, y, dx, dy):
+        self.x += (CENTER_X - self.x) / SCALE_TO_REDUCE 
+        self.y += (CENTER_Y - self.y) / SCALE_TO_REDUCE

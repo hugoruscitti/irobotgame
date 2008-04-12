@@ -87,7 +87,6 @@ class Motion(State):
 
         if fail_this_move:
             player.audio.play('fail')
-            player.tv.change_state(tv.Fail(player.tv))
         else:
             player.audio.play_correct_move()
             player.tv.change_state(tv.Well(player.tv))
