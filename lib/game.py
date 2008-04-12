@@ -130,6 +130,7 @@ class Game(Scene):
         self.arrows_selected = 0
 
     def init(self):
+        print "Iniciando"
         pass
 
     def change_state(self, state):

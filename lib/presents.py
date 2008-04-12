@@ -29,6 +29,9 @@ class Presents(Scene):
     def init(self):
         pass
 
+    def destroy(self):
+        pass
+
     def _create_sprites(self):
         images = [
                 common.load_image('presents/frame_1.png'),
