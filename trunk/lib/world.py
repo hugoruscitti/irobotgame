@@ -74,6 +74,7 @@ class World(pyglet.window.Window):
         self._new_scene = None
         gc.collect()
 
+
     def on_draw(self):
         if config.DEBUG:
             self.fps.draw()
