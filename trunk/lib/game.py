@@ -67,7 +67,8 @@ class Losing(State):
         State.__init__(self, game)
         game.world.audio.stop_music()
         game.player.change_state(player.Losing(self.game.player))
-        pyglet.clock.unschedule(game.on_update_level)
+        game.do_update_level = False
+        game.mouse.set_disable()
 
     def update(self, dt):
         self.step += dt
@@ -109,6 +110,8 @@ class Game(Scene):
 
     def __init__(self, world):
         Scene.__init__(self, world)
+        self.layer_x = 640
+        self.layer_y = 0
         self._load_images()
 
         self.good_moves_combo = 0
@@ -118,21 +121,22 @@ class Game(Scene):
         self.tv = tv.Tv()
         #self._create_light()
 
+    def init(self):
         self.player = player.Player(100, 80, self, self.tv)
         self.mouse = mouse.Mouse(self.player, self)
         self.world.capture_mouse()
         self.group = group.Group()
         self.level = level.Level(self)
 
+
         # TODO: Crear un módulo nuevo para esta verificación
         self.actual_move = 0
         self.message = text.GameMessage()
-        self.change_state(Starting(self))
         self.fails = 0
         self.arrows_selected = 0
 
-    def init(self):
-        print "Iniciando"
+        self.change_state(Starting(self))
+
 
     def destroy(self):
         print "terminando"
@@ -155,6 +159,7 @@ class Game(Scene):
 
     def on_update_level(self, dt):
         done = self.level.update()
+        print "ASDASDASDASD"
 
     def on_end_level(self):
         pyglet.clock.unschedule(self.on_update_level)
@@ -174,7 +179,13 @@ class Game(Scene):
         self.world.audio.play('stop')
 
         if all_robot_are_angry:
+            #pyglet.clock.unschedule(game.on_update_level)
             self.change_state(Losing(self))
+            self.player.tv.change_state(tv.Fail(self.player.tv))
+        else:
+            #self.player.change_state(player.Losing(self.player))
+            self.player.tv.change_state(tv.Fail(self.player.tv))
+
 
     def set_state(self, code):
         motions = self.level.get_motions_by_code(code)
@@ -187,6 +198,7 @@ class Game(Scene):
         else:
             fail = True
 
+
         # En caso de fallar y que no existan flechas evita que pieda
         if fail and self.level.are_empty():
             #self.message.set_text("Wait that arrows arrives...")
@@ -195,6 +207,7 @@ class Game(Scene):
         else:
             if isinstance(self.player.state, player.Dancing):
                 self.player.change_state(player.Motion(self.player, code, fail))
+                self.player.tv.change_state(tv.Fail(self.player.tv))
 
                 # Si falla hace que se enoje uno de los robots
                 if fail:
@@ -202,6 +215,8 @@ class Game(Scene):
                     self.world.audio.play('stop')
                     all_robot_are_angry = self.group.stop_dancing_one_robot()
                     self.add_fail()
+
+                    self.level.clear_when_fail()
 
                     if all_robot_are_angry:
                         self.change_state(Losing(self))
@@ -215,7 +230,7 @@ class Game(Scene):
 
     def on_draw(self):
         self._background.blit(0, 0)
-        self._layer.blit(640, 0)
+        self._layer.blit(self.layer_x, self.layer_y)
 
         for light in self.lower_ligths:
             light.draw()

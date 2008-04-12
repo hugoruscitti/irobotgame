@@ -40,7 +40,7 @@ class Motion(ActionSprite):
         self.timer += dt
 
         if self.are_active and self.timer > SPEED + self.delay:
-            self.do(Scale(0.1, SPEED) | FadeOut(SPEED))
+            self.hide()
             self.are_active = False
 
             # TODO: esto es otro sucio hack...
@@ -52,3 +52,7 @@ class Motion(ActionSprite):
 
     def _delete(self, dt=None):
         self.delete_me = True
+
+    def hide(self):
+        self.do(Scale(0.1, SPEED) | FadeOut(SPEED))
+        self.are_active = False
