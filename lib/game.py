@@ -69,6 +69,8 @@ class Losing(State):
         game.player.change_state(player.Losing(self.game.player))
         game.do_update_level = False
         game.mouse.set_disable()
+        self.step = 0
+        print "Cargando la escena Losing"
 
     def update(self, dt):
         self.step += dt
@@ -159,10 +161,9 @@ class Game(Scene):
 
     def on_update_level(self, dt):
         done = self.level.update()
-        print "ASDASDASDASD"
 
     def on_end_level(self):
-        pyglet.clock.unschedule(self.on_update_level)
+        print "On en level reach"
         score = self.group.get_score()
 
         if score == 4:
@@ -171,6 +172,8 @@ class Game(Scene):
         elif score < 4:
             new_scene = post_game_scenes.Regular(self.world, self)
             self.world.change_scene(new_scene)
+
+        self.do_update_level = False
 
     def on_motion_lost(self):
         all_robot_are_angry = self.group.stop_dancing_one_robot()
@@ -207,10 +210,10 @@ class Game(Scene):
         else:
             if isinstance(self.player.state, player.Dancing):
                 self.player.change_state(player.Motion(self.player, code, fail))
-                self.player.tv.change_state(tv.Fail(self.player.tv))
 
                 # Si falla hace que se enoje uno de los robots
                 if fail:
+                    self.player.tv.change_state(tv.Fail(self.player.tv))
                     self.good_moves_combo = 0
                     self.world.audio.play('stop')
                     all_robot_are_angry = self.group.stop_dancing_one_robot()
@@ -221,6 +224,7 @@ class Game(Scene):
                     if all_robot_are_angry:
                         self.change_state(Losing(self))
                 else:
+                    self.player.tv.change_state(tv.Well(self.player.tv))
                     self.arrows_selected += 1
                     self.good_moves_combo += 1
 
