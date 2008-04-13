@@ -71,8 +71,7 @@ class Level:
             if items[0] != ' ' or items[1] != ' ':
                 return items
         else:
-            if not self.sprites:
-                self.game.on_end_level()
+            self.game.on_end_level()
 
     def _load_map(self):
         stream = common.open('level.txt')
