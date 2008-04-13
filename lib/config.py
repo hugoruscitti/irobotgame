@@ -1,6 +1,6 @@
 DEBUG = False
 MOVE_WINDOW = False
-AUDIO = False
+AUDIO = True
 SHOW_MOUSE = False
 SHOW_PAD = True
 FULLSCREEN = False
