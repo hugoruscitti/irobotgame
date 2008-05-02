@@ -4,8 +4,11 @@
 # License: GPL 3
 # Web: http://www.losersjuegos.com.ar
 
+import os
+
 import pyglet
 import random
+import pygame
 
 import common
 import config
@@ -14,10 +17,13 @@ class Audio:
 
     def __init__(self):
         if config.AUDIO:
+            pygame.mixer.init()
             self._load_music()
             self._load_sounds()
 
     def _load_music(self):
+        pass
+        '''
         self.music_intro = pyglet.media.Player()
         self.music_intro.queue(common.load_music('music/intro.mp3'))
         self.music_intro.eos_action = 'loop'
@@ -25,20 +31,35 @@ class Audio:
         self.music_game = pyglet.media.Player()
         self.music_game.queue(common.load_music('music/wer.mp3'))
         self.music_game.eos_action = 'loop'
+        '''
 
     def play_music(self, name):
         if config.AUDIO:
+            '''
             self.stop_music()
             self._load_music()
+            '''
             if name == 'game':
-                self.music_game.play()
+                common.load_music('wer.mp3')
             else:
-                self.music_intro.play()
+                common.load_music('intro.mp3')
+            '''
+                path = os.path.join(DATADIR, path, 'wer.mp3')
+            else:
+                path = os.path.join(DATADIR, path, 'intro.mp3')
+            '''
+
+            pygame.mixer.music.play(-1)
+            #self.music_intro.play()
 
     def stop_music(self):
         if config.AUDIO:
+            pygame.mixer.music.stop()
+            pass
+            '''
             self.music_intro.pause()
             self.music_game.pause()
+            '''
 
     def _load_sounds(self):
         self.sounds = {
@@ -55,11 +76,12 @@ class Audio:
     def update(self):
         if config.AUDIO:
             pyglet.media.dispatch_events()
-
+            '''
             if self.music_game.playing:
                 self.music_game.dispatch_events()
             elif self.music_intro.playing:
                 self.music_intro.dispatch_events()
+            '''
 
     def play(self, name):
         if config.AUDIO:
