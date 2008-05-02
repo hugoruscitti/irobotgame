@@ -7,6 +7,7 @@
 import os
 import math
 
+import pygame
 import pyglet
 
 
@@ -16,8 +17,12 @@ DATADIR = os.path.normpath(os.path.join(THISDIR, '..', 'data'))
 def load_image(path):
     return pyglet.image.load(os.path.join(DATADIR, path))
 
-def load_music(path):
+def load_music(filename):
+    path = os.path.join(DATADIR, 'music', filename)
+    pygame.mixer.music.load(path)
+    '''
     return pyglet.media.load(os.path.join(DATADIR, path), streaming=True)
+    '''
 
 def load_sound(path):
     return pyglet.media.load(os.path.join(DATADIR, path), streaming=False)
